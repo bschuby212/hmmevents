@@ -201,23 +201,19 @@ button {
   top: 0;
   width: 145px;
   height: 149px;
-  offset-path: path("M 116 690 C 128 635 120 574 156 519 C 194 451 250 405 278 301");
-  offset-anchor: center;
-  offset-distance: 0%;
-  offset-rotate: auto -90deg;
-  transform: translateZ(0);
+  transform: translate3d(43.5px, 615.5px, 0) rotate(-167.7deg);
   transform-origin: center;
-  will-change: offset-distance;
+  will-change: transform;
   pointer-events: none;
 }
 
 .mind-map--traveling .map-world__van {
-  animation: van-travel var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
+  animation: van-travel var(--travel-duration) linear both;
 }
 
 .mind-map--arrived .map-world__van,
 .mind-map--completed .map-world__van {
-  offset-distance: 100%;
+  transform: translate3d(205.5px, 226.5px, 0) rotate(-164.9deg);
 }
 
 .mystery-stop {
@@ -572,20 +568,22 @@ button {
   z-index: 5;
   width: 51px;
   height: 56px;
-  overflow: hidden;
-  clip-path: ellipse(48% 49% at 50% 50%);
   filter: drop-shadow(0 2px 3px rgba(0,0,0,.28));
   pointer-events: none;
   transition: left 200ms cubic-bezier(.22,.8,.28,1), top 200ms cubic-bezier(.22,.8,.28,1);
 }
 
+.placement-sticker--hidden {
+  visibility: hidden;
+}
+
 .placement-sticker img {
   position: absolute;
-  left: -13px;
-  top: -23px;
-  width: 77px;
-  height: 89px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   max-width: none;
+  object-fit: contain;
   pointer-events: none;
   user-select: none;
 }
@@ -690,8 +688,6 @@ button {
   z-index: 1;
   width: 22px;
   height: 24px;
-  overflow: hidden;
-  clip-path: ellipse(48% 49% at 50% 50%);
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .27));
   pointer-events: none;
@@ -699,11 +695,11 @@ button {
 
 .drive-off-sticker img {
   position: absolute;
-  left: -6px;
-  top: -10px;
-  width: 34px;
-  height: 39px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   max-width: none;
+  object-fit: contain;
   user-select: none;
 }
 
@@ -714,14 +710,71 @@ button {
   pointer-events: none;
 }
 
+.sticker-drop-overlay {
+  position: absolute;
+  z-index: 100;
+  left: 86.5px;
+  top: 241px;
+  width: 220px;
+  height: 220px;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .24));
+}
+
+.sticker-drop-overlay img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.sticker-drop-overlay--lifting {
+  animation: sticker-drop-lift 400ms cubic-bezier(.22, .8, .28, 1) both;
+}
+
+.sticker-drop-overlay--crossfading {
+  transform: translate3d(0, -152px, 0) rotate(1.5deg) scale(1.06);
+}
+
+.sticker-drop-overlay--landing {
+  transform: translate3d(-39.5px, 72px, 0) rotate(0) scale(.232);
+  transition: transform 340ms cubic-bezier(.4, .05, .25, 1);
+}
+
 @keyframes map-camera {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(0, 36px, 0); }
 }
 
 @keyframes van-travel {
-  from { offset-distance: 0%; }
-  to { offset-distance: 100%; }
+  0% { transform: translate3d(43.5px, 615.5px, 0) rotate(-167.7deg); }
+  5% { transform: translate3d(47.2px, 594.4px, 0) rotate(-171.9deg); }
+  10% { transform: translate3d(49.8px, 573px, 0) rotate(-174deg); }
+  15% { transform: translate3d(51.9px, 551.9px, 0) rotate(-174.1deg); }
+  20% { transform: translate3d(54.5px, 530.3px, 0) rotate(-172.2deg); }
+  25% { transform: translate3d(57.9px, 509.5px, 0) rotate(-168.5deg); }
+  30% { transform: translate3d(63.1px, 488.7px, 0) rotate(-163.2deg); }
+  35% { transform: translate3d(70.5px, 468.6px, 0) rotate(-156.4deg); }
+  40% { transform: translate3d(80.4px, 449.5px, 0) rotate(-148.9deg); }
+  45% { transform: translate3d(91.5px, 430.9px, 0) rotate(-148.4deg); }
+  50% { transform: translate3d(102.9px, 413.2px, 0) rotate(-145.9deg); }
+  55% { transform: translate3d(115.2px, 395.6px, 0) rotate(-144.5deg); }
+  60% { transform: translate3d(127.8px, 378.1px, 0) rotate(-144.2deg); }
+  65% { transform: translate3d(140.2px, 360.7px, 0) rotate(-145deg); }
+  70% { transform: translate3d(152.2px, 343px, 0) rotate(-146.7deg); }
+  75% { transform: translate3d(163.7px, 324.8px, 0) rotate(-149.1deg); }
+  80% { transform: translate3d(174.2px, 306.1px, 0) rotate(-152.1deg); }
+  85% { transform: translate3d(183.7px, 287.1px, 0) rotate(-155.3deg); }
+  90% { transform: translate3d(192.2px, 267px, 0) rotate(-158.6deg); }
+  95% { transform: translate3d(199.4px, 246.9px, 0) rotate(-161.9deg); }
+  100% { transform: translate3d(205.5px, 226.5px, 0) rotate(-164.9deg); }
+}
+
+@keyframes sticker-drop-lift {
+  from { transform: translate3d(0, 0, 0) rotate(0) scale(1); }
+  to { transform: translate3d(0, -152px, 0) rotate(1.5deg) scale(1.06); }
 }
 
 @keyframes drive-off-exit {
@@ -758,6 +811,12 @@ button {
 
   .drive-off-van-wrap--driving {
     animation-duration: 1ms;
+  }
+
+  .sticker-drop-overlay--lifting,
+  .sticker-drop-overlay--landing {
+    animation-duration: 1ms;
+    transition-duration: 1ms;
   }
 
   *, *::before, *::after {

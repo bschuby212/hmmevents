@@ -22,6 +22,13 @@ type ExperiencePhase =
   | "placement"
   | "complete";
 
+type StickerTransitionStage =
+  | "idle"
+  | "lifting"
+  | "crossfading"
+  | "landing"
+  | "complete";
+
 function preloadImages(sources: string[]) {
   return Promise.all(
     sources.map(
@@ -45,7 +52,10 @@ export default function App() {
   const [phase, setPhase] = useState<ExperiencePhase>("loading");
   const [traveling, setTraveling] = useState(false);
   const [progress, setProgress] = useState<EventProgress>(INITIAL_PROGRESS);
+  const [stickerTransition, setStickerTransition] =
+    useState<StickerTransitionStage>("idle");
   const nextAssets = useRef<Promise<unknown>>(Promise.resolve());
+  const transitionTimers = useRef<number[]>([]);
 
   useEffect(() => {
     let active = true;
@@ -61,6 +71,11 @@ export default function App() {
     };
   }, []);
 
+  useEffect(
+    () => () => transitionTimers.current.forEach((timer) => window.clearTimeout(timer)),
+    [],
+  );
+
   useEffect(() => {
     if (!traveling) return;
     setProgress((current) => ({ ...current, status: "traveling" }));
@@ -75,6 +90,26 @@ export default function App() {
       nextAssets.current = preloadImages([coast, placementVan, event.rewardSticker]);
     }
   }, [event.rewardSticker, phase]);
+
+  const beginStickerDrop = async () => {
+    await nextAssets.current;
+    transitionTimers.current.forEach((timer) => window.clearTimeout(timer));
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setStickerTransition("lifting");
+    transitionTimers.current = [
+      window.setTimeout(() => {
+        setPhase("placement");
+        setStickerTransition("crossfading");
+      }, reduced ? 20 : 400),
+      window.setTimeout(
+        () => setStickerTransition("landing"),
+        reduced ? 40 : 540,
+      ),
+      window.setTimeout(() => {
+        setStickerTransition("complete");
+      }, reduced ? 60 : 920),
+    ];
+  };
 
   const screen = useMemo(() => {
     if (phase === "loading") {
@@ -111,10 +146,8 @@ export default function App() {
         <EventExperience
           event={event}
           mode="reward"
-          onContinue={async () => {
-            await nextAssets.current;
-            setPhase("placement");
-          }}
+          stickerDeparting={stickerTransition === "lifting"}
+          onContinue={beginStickerDrop}
         />
       );
     }
@@ -122,6 +155,7 @@ export default function App() {
       return (
         <StickerPlacement
           event={event}
+          stickerVisible={stickerTransition === "complete"}
           onConfirm={() => {
             setProgress({
               status: "completed",
@@ -135,12 +169,22 @@ export default function App() {
       );
     }
     return <MindMap completed />;
-  }, [event, phase, traveling]);
+  }, [event, phase, stickerTransition, traveling]);
 
   return (
     <main className="experience-shell" data-progress={progress.status}>
       <div className="device">
-        <div className="device__screen">{screen}</div>
+        <div className="device__screen">
+          {screen}
+          {stickerTransition !== "idle" && stickerTransition !== "complete" && (
+            <div
+              className={`sticker-drop-overlay sticker-drop-overlay--${stickerTransition}`}
+              aria-hidden="true"
+            >
+              <img src={event.stickerArtwork} alt="" draggable={false} />
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

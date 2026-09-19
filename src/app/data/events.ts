@@ -1,6 +1,7 @@
 import sasquatchEvent from "@/imports/CloseTheDay-1/e2bd23e39d33f773566dc5e77b34e6ba32aa8619.png";
 import sasquatchReward from "@/imports/CloseTheDay/7d9a740afbefdbbf75c48b853fc1a0d85d8151ab.png";
 import sasquatchSticker from "@/imports/saswuatch_sticker.png";
+import sasquatchStickerArtwork from "@/assets/stickers/bigfoot.png";
 
 export type JourneyEvent = {
   id: string;
@@ -10,6 +11,7 @@ export type JourneyEvent = {
   eventArtwork: string;
   rewardArtwork: string;
   rewardSticker: string;
+  stickerArtwork: string;
   destination: "silver-star";
   date: string;
 };
@@ -30,6 +32,7 @@ export const BIGFOOT_EVENT: JourneyEvent = {
   eventArtwork: sasquatchEvent,
   rewardArtwork: sasquatchReward,
   rewardSticker: sasquatchSticker,
+  stickerArtwork: sasquatchStickerArtwork,
   destination: "silver-star",
   date: "Nov 29, 2025",
 };

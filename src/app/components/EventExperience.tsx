@@ -8,12 +8,14 @@ type EventExperienceProps = {
   event: JourneyEvent;
   mode: "event" | "reward";
   onContinue: () => void;
+  stickerDeparting?: boolean;
 };
 
 export default function EventExperience({
   event,
   mode,
   onContinue,
+  stickerDeparting = false,
 }: EventExperienceProps) {
   const reward = mode === "reward";
   const [stickerVisible, setStickerVisible] = useState(false);
@@ -62,7 +64,10 @@ export default function EventExperience({
       {reward && stickerVisible && (
         <>
           <div className="absolute left-[44.5px] top-[140px] w-[304px] h-[354.35px] rounded-[16px] z-[14]" style={{ backdropFilter: "blur(14px)", background: "rgba(0,0,0,0.28)" }} />
-          <div className="absolute left-[44.5px] top-[140px] w-[304px] h-[354.35px] z-[15]">
+          <div
+            className="absolute left-[44.5px] top-[140px] w-[304px] h-[354.35px] z-[15] transition-opacity duration-200"
+            style={{ opacity: stickerDeparting ? 0 : 1 }}
+          >
             <img className="size-full object-contain pointer-events-none" src={event.rewardSticker} alt="Sasquatch sticker reward" draggable={false} />
           </div>
         </>

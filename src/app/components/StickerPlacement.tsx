@@ -15,6 +15,7 @@ export type StickerTransform = {
 type StickerPlacementProps = {
   event: JourneyEvent;
   onConfirm: (placement: StickerTransform) => void;
+  stickerVisible?: boolean;
 };
 
 const DEFAULT_PLACEMENT: StickerTransform = {
@@ -48,6 +49,7 @@ function clampVanOffset(offset: number) {
 export default function StickerPlacement({
   event,
   onConfirm,
+  stickerVisible = true,
 }: StickerPlacementProps) {
   const [placement, setPlacement] = useState<StickerTransform>(DEFAULT_PLACEMENT);
   const [isDragging, setIsDragging] = useState(false);
@@ -175,7 +177,7 @@ export default function StickerPlacement({
         <div className="drive-off-van-wrap drive-off-van-wrap--driving">
           <img className="drive-off-van" src={sideVan} alt="Blue camper van driving away" draggable={false} />
           <div className="drive-off-sticker" style={{ left: `${left}%`, top: `${top}%` }}>
-            <img src={event.rewardSticker} alt="" draggable={false} />
+            <img src={event.stickerArtwork} alt="" draggable={false} />
           </div>
         </div>
         <div className="drive-off-status">
@@ -219,7 +221,7 @@ export default function StickerPlacement({
           }}
         />
         <div
-          className="placement-sticker"
+          className={`placement-sticker${stickerVisible ? "" : " placement-sticker--hidden"}`}
           style={{
             left: placement.x,
             top: placement.y,
@@ -228,7 +230,7 @@ export default function StickerPlacement({
           role="img"
           aria-label="Sasquatch sticker on the van"
         >
-          <img src={event.rewardSticker} alt="" draggable={false} />
+          <img src={event.stickerArtwork} alt="" draggable={false} />
         </div>
       </div>
 
