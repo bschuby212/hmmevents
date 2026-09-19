@@ -60,6 +60,8 @@ export default function App() {
   const nextAssets = useRef<Promise<unknown>>(Promise.resolve());
   const transitionTimers = useRef<number[]>([]);
   const travelStartTimer = useRef(0);
+  const shellRef = useRef<HTMLElement | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
 
   const clearTransitionTimers = () => {
     transitionTimers.current.forEach((timer) => window.clearTimeout(timer));
@@ -87,6 +89,35 @@ export default function App() {
       active = false;
       window.clearTimeout(travelStartTimer.current);
       clearTransitionTimers();
+    };
+  }, []);
+
+  useEffect(() => {
+    const shell = shellRef.current;
+    const stage = stageRef.current;
+    if (!shell || !stage) return;
+
+    const fitStage = () => {
+      const pad = 16;
+      const availableWidth = Math.max(shell.clientWidth - pad, 1);
+      const availableHeight = Math.max(shell.clientHeight - pad, 1);
+      const naturalWidth = stage.offsetWidth || 1;
+      const naturalHeight = stage.offsetHeight || 1;
+      const scale = Math.min(
+        availableWidth / naturalWidth,
+        availableHeight / naturalHeight,
+      );
+      stage.style.setProperty("--stage-scale", String(scale));
+    };
+
+    fitStage();
+    const observer = new ResizeObserver(fitStage);
+    observer.observe(shell);
+    observer.observe(stage);
+    window.addEventListener("orientationchange", fitStage);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("orientationchange", fitStage);
     };
   }, []);
 
@@ -209,41 +240,43 @@ export default function App() {
   }, [event, phase, stickerTransition, traveling]);
 
   return (
-    <main className="experience-shell" data-progress={progress.status}>
-      <div className="experience-controls" aria-label="Event variants">
-        <div className="event-chips">
-          {JOURNEY_EVENTS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`event-chip${activeEventId === item.id ? " event-chip--active" : ""}`}
-              onClick={() => selectEvent(item.id)}
-            >
-              {item.chipLabel}
-            </button>
-          ))}
+    <main ref={shellRef} className="experience-shell" data-progress={progress.status}>
+      <div ref={stageRef} className="experience-stage">
+        <div className="experience-controls" aria-label="Event variants">
+          <div className="event-chips">
+            {JOURNEY_EVENTS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`event-chip${activeEventId === item.id ? " event-chip--active" : ""}`}
+                onClick={() => selectEvent(item.id)}
+              >
+                {item.chipLabel}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="scene-reset"
+            aria-label="Reset scene"
+            onClick={restartMap}
+          >
+            <RotateCcw size={18} />
+          </button>
         </div>
-        <button
-          type="button"
-          className="scene-reset"
-          aria-label="Reset scene"
-          onClick={restartMap}
-        >
-          <RotateCcw size={18} />
-        </button>
-      </div>
 
-      <div className="device">
-        <div className="device__screen">
-          {screen}
-          {stickerTransition !== "idle" && stickerTransition !== "complete" && (
-            <div
-              className={`sticker-drop-overlay sticker-drop-overlay--${stickerTransition}`}
-              aria-hidden="true"
-            >
-              <img src={event.stickerArtwork} alt="" draggable={false} />
-            </div>
-          )}
+        <div className="device">
+          <div className="device__screen">
+            {screen}
+            {stickerTransition !== "idle" && stickerTransition !== "complete" && (
+              <div
+                className={`sticker-drop-overlay sticker-drop-overlay--${stickerTransition}`}
+                aria-hidden="true"
+              >
+                <img src={event.stickerArtwork} alt="" draggable={false} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </main>
