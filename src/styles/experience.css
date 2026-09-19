@@ -237,7 +237,7 @@ button {
 
 .map-tree--one { left: 340px; top: 132px; width: 39px; height: 46px; }
 .map-tree--two { left: 33px; top: 385px; width: 39px; height: 47px; }
-.map-tree--three { left: 218px; top: 598px; width: 39px; height: 46px; }
+.map-tree--three { left: 157px; top: 598px; width: 39px; height: 46px; }
 .map-tree--four { left: 279px; top: 407px; width: 39px; height: 47px; }
 .map-tree--five { left: 18px; top: 749px; width: 39px; height: 46px; }
 
@@ -250,13 +250,44 @@ button {
 
 .map-landmark--stand {
   left: 178px;
-  top: 622px;
+  top: 632px;
   width: 174px;
   height: 174px;
 }
 
+.map-landmark--stand img {
+  position: absolute;
+  inset: 0;
+  width: 174px;
+  height: 174px;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.map-landmark__stand-title {
+  position: absolute;
+  z-index: 3;
+  left: 202px;
+  top: 656px;
+  width: 62px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  color: #1a1512;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+
 .map-landmark--gold {
-  left: 74px;
+  left: 77px;
   top: 704px;
   width: 81px;
   height: 83px;

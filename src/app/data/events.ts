@@ -52,7 +52,7 @@ export const JOURNEY_EVENTS: JourneyEvent[] = [
       "Something moves between the trees. Slow down and take a closer look…",
     rewardCopy: "You saw it too, right? You earned the Sasquatch sticker.",
     collectLabel: "Collect Sasquatch",
-    placementTitle: "Place Sticker",
+    placementTitle: "Place Your Sticker",
     placementCopy:
       "You survived the encounter. Drag your van to adjust the view, then tap where this sticker belongs.",
     placeLabel: "Place Sticker",
@@ -74,7 +74,7 @@ export const JOURNEY_EVENTS: JourneyEvent[] = [
     rewardCopy:
       "You survived the pit stop. Nature called — and you answered.",
     collectLabel: "Collect Nature Calls",
-    placementTitle: "Place Sticker",
+    placementTitle: "Place Your Sticker",
     placementCopy:
       "You survived the encounter. Drag your van to adjust the view, then tap where this sticker belongs.",
     placeLabel: "Place Sticker",
@@ -96,7 +96,7 @@ export const JOURNEY_EVENTS: JourneyEvent[] = [
     rewardCopy:
       "You stopped to help. That kindness earned you the Helping Hand sticker.",
     collectLabel: "Collect Helping Hand",
-    placementTitle: "Place Sticker",
+    placementTitle: "Place Your Sticker",
     placementCopy:
       "You survived the encounter. Drag your van to adjust the view, then tap where this sticker belongs.",
     placeLabel: "Place Sticker",

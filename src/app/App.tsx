@@ -98,48 +98,59 @@ export default function App() {
     const stage = stageRef.current;
     if (!shell || !frame || !stage) return;
 
+    const clearInlineBox = (el: HTMLElement | null) => {
+      if (!el) return;
+      el.style.width = "";
+      el.style.height = "";
+      el.style.minWidth = "";
+      el.style.minHeight = "";
+    };
+
     const fitStage = () => {
       const pad = 16;
       const viewportW = Math.max(
-        window.visualViewport?.width ?? 0,
+        window.visualViewport?.width || 0,
         window.innerWidth || 0,
-        360,
+        1,
       );
       const viewportH = Math.max(
-        window.visualViewport?.height ?? 0,
+        window.visualViewport?.height || 0,
         window.innerHeight || 0,
-        640,
+        1,
       );
 
-      // Percentage heights can collapse to 0 in embeds; force a real viewport box.
-      if (shell.clientHeight < 64 || shell.clientWidth < 64) {
-        for (const el of [document.documentElement, document.body]) {
-          el.style.minHeight = `${viewportH}px`;
-          el.style.height = `${viewportH}px`;
-        }
-        const root = document.getElementById("root");
-        if (root) {
-          root.style.minHeight = `${viewportH}px`;
-          root.style.height = `${viewportH}px`;
-        }
+      // Stale inline sizes from a collapsed first paint will block recovery when
+      // the embed grows — clear them once the viewport is usable.
+      if (viewportW >= 64 && viewportH >= 64) {
+        clearInlineBox(document.documentElement);
+        clearInlineBox(document.body);
+        clearInlineBox(document.getElementById("root"));
+        clearInlineBox(shell);
+      } else if (shell.clientHeight < 64 || shell.clientWidth < 64) {
         shell.style.minWidth = `${viewportW}px`;
         shell.style.width = `${viewportW}px`;
         shell.style.minHeight = `${viewportH}px`;
         shell.style.height = `${viewportH}px`;
       }
 
-      const availableWidth = Math.max(shell.clientWidth - pad, viewportW - pad, 1);
-      const availableHeight = Math.max(shell.clientHeight - pad, viewportH - pad, 1);
+      const availableWidth = Math.max(
+        (shell.clientWidth || viewportW) - pad,
+        1,
+      );
+      const availableHeight = Math.max(
+        (shell.clientHeight || viewportH) - pad,
+        1,
+      );
       const naturalWidth = stage.offsetWidth || 421;
       const naturalHeight = stage.offsetHeight || 938;
       const rawScale = Math.min(
         availableWidth / naturalWidth,
         availableHeight / naturalHeight,
       );
+      // Never replace a tiny fit with scale=1 — that overflows overflow:hidden
+      // and paints a blank shell (white screen).
       const scale =
-        Number.isFinite(rawScale) && rawScale > 0
-          ? Math.max(rawScale, 0.2)
-          : 1;
+        Number.isFinite(rawScale) && rawScale > 0 ? rawScale : 1;
       stage.style.setProperty("--stage-scale", String(scale));
       frame.style.width = `${naturalWidth * scale}px`;
       frame.style.height = `${naturalHeight * scale}px`;
@@ -148,7 +159,6 @@ export default function App() {
     fitStage();
     const observer = new ResizeObserver(fitStage);
     observer.observe(shell);
-    observer.observe(stage);
     window.addEventListener("resize", fitStage);
     window.visualViewport?.addEventListener("resize", fitStage);
     window.addEventListener("orientationchange", fitStage);

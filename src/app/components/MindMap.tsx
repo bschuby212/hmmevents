@@ -80,7 +80,12 @@ export default function MindMap({
         <img className="map-tree map-tree--three" src={treeDark} alt="" draggable={false} />
         <img className="map-tree map-tree--four" src={treeLight} alt="" draggable={false} />
         <img className="map-tree map-tree--five" src={treeDark} alt="" draggable={false} />
-        <img className="map-landmark map-landmark--stand" src={stickerStand} alt="Sticker Stand" draggable={false} />
+        <div className="map-landmark map-landmark--stand" aria-label="Sticker Stand">
+          <img src={stickerStand} alt="" draggable={false} />
+        </div>
+        <span className="map-landmark__stand-title" aria-hidden="true">
+          STICKER STAND
+        </span>
         <img className="map-landmark map-landmark--gold" src={goldStar} alt="Gold Star" draggable={false} />
         <img className="map-landmark map-landmark--silver" src={silverStar} alt="Silver Star" draggable={false} />
         <MysteryStop />

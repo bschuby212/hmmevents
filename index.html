@@ -18,10 +18,28 @@
         overscroll-behavior: none;
         background: #ecebe8;
       }
+      /* Instant paint before JS — avoids blank "loading" over slow tunnels */
+      #boot {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #ecebe8;
+        color: #063235;
+        font-family: system-ui, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 0;
+      }
+      #root:not(:empty) ~ #boot,
+      #root:not(:empty) + #boot {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
+    <div id="boot" aria-hidden="true">Your Mind Map</div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
