@@ -142,6 +142,7 @@ export default function App() {
     if (phase === "map" || phase === "arrival") {
       return (
         <MindMap
+          key={activeEventId}
           traveling={traveling}
           arrived={phase === "arrival"}
           onArrived={() => {
@@ -202,7 +203,7 @@ export default function App() {
       );
     }
     return <MindMap completed />;
-  }, [event, phase, stickerTransition, traveling]);
+  }, [activeEventId, event, phase, stickerTransition, traveling]);
 
   return (
     <main className="experience-shell" data-progress={progress.status}>

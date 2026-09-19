@@ -40,6 +40,21 @@ export default function MindMap({
   const onArrivedRef = useRef(onArrived);
   onArrivedRef.current = onArrived;
 
+  // Each new journey must be allowed to fire onArrived again (event chip / reset).
+  useEffect(() => {
+    if (!traveling) return;
+    arrivedRef.current = false;
+
+    // Fallback if animationend never fires (common after remount / chip switch).
+    const fallback = window.setTimeout(() => {
+      if (arrivedRef.current || completed) return;
+      arrivedRef.current = true;
+      onArrivedRef.current?.();
+    }, 4800);
+
+    return () => window.clearTimeout(fallback);
+  }, [completed, traveling]);
+
   useEffect(() => {
     if (!traveling || completed || arrivedRef.current) return;
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -69,17 +84,18 @@ export default function MindMap({
         <img className="map-world__topography" src={topography} alt="" draggable={false} />
         <img className="map-hill map-hill--light" src={hillsLight} alt="" draggable={false} />
         <img className="map-hill map-hill--dark" src={hillDark} alt="" draggable={false} />
+        {/* Trees under the road so foliage never sits on the asphalt */}
+        <img className="map-tree map-tree--one" src={treeDark} alt="" draggable={false} />
+        <img className="map-tree map-tree--two" src={treeLight} alt="" draggable={false} />
+        <img className="map-tree map-tree--three" src={treeDark} alt="" draggable={false} />
+        <img className="map-tree map-tree--four" src={treeLight} alt="" draggable={false} />
+        <img className="map-tree map-tree--five" src={treeDark} alt="" draggable={false} />
         <svg className="map-road" viewBox="0 0 393 930" aria-hidden="true">
           <path className="map-road__shoulder" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
           <path className="map-road__surface" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
           <path className="map-road__center" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
         </svg>
         <img className="map-water" src={water} alt="" draggable={false} />
-        <img className="map-tree map-tree--one" src={treeDark} alt="" draggable={false} />
-        <img className="map-tree map-tree--two" src={treeLight} alt="" draggable={false} />
-        <img className="map-tree map-tree--three" src={treeDark} alt="" draggable={false} />
-        <img className="map-tree map-tree--four" src={treeLight} alt="" draggable={false} />
-        <img className="map-tree map-tree--five" src={treeDark} alt="" draggable={false} />
         <div className="map-landmark map-landmark--stand" aria-label="Sticker Stand">
           <img src={stickerStand} alt="" draggable={false} />
         </div>

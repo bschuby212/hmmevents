@@ -193,6 +193,7 @@ button {
 
 .map-road {
   position: absolute;
+  z-index: 2;
   inset: 0;
   width: 393px;
   height: 930px;
@@ -231,6 +232,7 @@ button {
 
 .map-tree {
   position: absolute;
+  z-index: 1;
   pointer-events: none;
 }
 
