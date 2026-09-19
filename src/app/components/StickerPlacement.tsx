@@ -190,7 +190,7 @@ export default function StickerPlacement({
   }
 
   return (
-    <section className="placement-screen" aria-label="Place your Bigfoot sticker">
+    <section className="placement-screen" aria-label={`Place your ${event.chipLabel} sticker`}>
       <div
         ref={beachRef}
         className="placement-beach"
@@ -230,22 +230,22 @@ export default function StickerPlacement({
             transform: `translate(-50%, -50%) rotate(${placement.rotation}deg) scale(${placement.scale})`,
           }}
           role="img"
-          aria-label="Sasquatch sticker on the van"
+          aria-label={`${event.chipLabel} sticker on the van`}
         >
           <img src={event.stickerArtwork} alt="" draggable={false} />
         </div>
       </div>
 
       <div className="placement-panel">
-        <h1>Place Your Sasquatch</h1>
-        <p>Drag your van to frame the sighting, then tap where Sasquatch belongs.</p>
+        <h1>{event.placementTitle}</h1>
+        <p>{event.placementCopy}</p>
         <div className="placement-actions">
           <button
             type="button"
             className="placement-action placement-action--primary"
             onClick={() => setDrivingOff(true)}
           >
-            Place Sasquatch
+            {event.placeLabel}
           </button>
           <button
             type="button"

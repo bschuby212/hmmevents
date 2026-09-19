@@ -30,7 +30,7 @@ export default function EventExperience({
   }, [reward]);
 
   return (
-    <section className="absolute inset-0 overflow-hidden bg-[#faf8f7]" aria-label={reward ? "Bigfoot sticker reward" : "Bigfoot event"}>
+    <section className="absolute inset-0 overflow-hidden bg-[#faf8f7]" aria-label={reward ? `${event.title} reward` : event.title}>
       <motion.div
         className="absolute left-0 w-[393px] h-[861px] overflow-hidden"
         style={{ top: -273, zIndex: reward ? 2 : 1 }}
@@ -40,9 +40,7 @@ export default function EventExperience({
       >
         <div
           className="absolute"
-          style={reward
-            ? { left: -260, top: -122, width: 908, height: 1135 }
-            : { left: -29, top: 125, width: 461, height: 819 }}
+          style={reward ? event.rewardFrame : event.eventFrame}
         >
           <img
             className="absolute inset-0 size-full max-w-none object-cover pointer-events-none"
@@ -68,7 +66,7 @@ export default function EventExperience({
             className="absolute left-[44.5px] top-[140px] w-[304px] h-[354.35px] z-[15] transition-opacity duration-200"
             style={{ opacity: stickerDeparting ? 0 : 1 }}
           >
-            <img className="size-full object-contain pointer-events-none" src={event.rewardSticker} alt="Sasquatch sticker reward" draggable={false} />
+            <img className="size-full object-contain pointer-events-none" src={event.rewardSticker} alt={`${event.chipLabel} sticker reward`} draggable={false} />
           </div>
         </>
       )}
@@ -99,7 +97,7 @@ export default function EventExperience({
               <path d="M15 3.5C15 5.85 15 7.02 15.62 7.83C16.43 9 17.6 9 20.5 9" stroke="white" strokeWidth="1.5" />
             </svg>
           )}
-          <span className="text-[14px] leading-[20px] font-bold">{reward ? "Collect Sasquatch" : "Continue"}</span>
+          <span className="text-[14px] leading-[20px] font-bold">{reward ? event.collectLabel : "Continue"}</span>
           {!reward && (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 12H18.5M13 6S19 10.42 19 12S13 18 13 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

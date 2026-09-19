@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { RotateCcw } from "lucide-react";
 import MindMap from "@/app/components/MindMap";
 import EventExperience from "@/app/components/EventExperience";
 import StickerPlacement from "@/app/components/StickerPlacement";
 import {
-  BIGFOOT_EVENT,
   INITIAL_PROGRESS,
+  JOURNEY_EVENTS,
   type EventProgress,
 } from "@/app/data/events";
 import mapTopography from "@/assets/map/figma/topography.svg";
@@ -48,7 +49,9 @@ function preloadImages(sources: string[]) {
 }
 
 export default function App() {
-  const event = BIGFOOT_EVENT;
+  const [activeEventId, setActiveEventId] = useState(JOURNEY_EVENTS[0].id);
+  const event =
+    JOURNEY_EVENTS.find((item) => item.id === activeEventId) ?? JOURNEY_EVENTS[0];
   const [phase, setPhase] = useState<ExperiencePhase>("loading");
   const [traveling, setTraveling] = useState(false);
   const [progress, setProgress] = useState<EventProgress>(INITIAL_PROGRESS);
@@ -56,25 +59,36 @@ export default function App() {
     useState<StickerTransitionStage>("idle");
   const nextAssets = useRef<Promise<unknown>>(Promise.resolve());
   const transitionTimers = useRef<number[]>([]);
+  const travelStartTimer = useRef(0);
+
+  const clearTransitionTimers = () => {
+    transitionTimers.current.forEach((timer) => window.clearTimeout(timer));
+    transitionTimers.current = [];
+  };
+
+  const restartMap = () => {
+    clearTransitionTimers();
+    window.clearTimeout(travelStartTimer.current);
+    setTraveling(false);
+    setProgress(INITIAL_PROGRESS);
+    setStickerTransition("idle");
+    setPhase("map");
+    travelStartTimer.current = window.setTimeout(() => setTraveling(true), 850);
+  };
 
   useEffect(() => {
     let active = true;
-    let startTimer = 0;
     preloadImages([mapTopography, mapWater, mapVan]).then(() => {
       if (!active) return;
       setPhase("map");
-      startTimer = window.setTimeout(() => setTraveling(true), 850);
+      travelStartTimer.current = window.setTimeout(() => setTraveling(true), 850);
     });
     return () => {
       active = false;
-      window.clearTimeout(startTimer);
+      window.clearTimeout(travelStartTimer.current);
+      clearTransitionTimers();
     };
   }, []);
-
-  useEffect(
-    () => () => transitionTimers.current.forEach((timer) => window.clearTimeout(timer)),
-    [],
-  );
 
   useEffect(() => {
     if (!traveling) return;
@@ -101,7 +115,7 @@ export default function App() {
 
   const beginStickerDrop = async () => {
     await nextAssets.current;
-    transitionTimers.current.forEach((timer) => window.clearTimeout(timer));
+    clearTransitionTimers();
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setStickerTransition("lifting");
     transitionTimers.current = [
@@ -117,6 +131,12 @@ export default function App() {
         setStickerTransition("complete");
       }, reduced ? 60 : 920),
     ];
+  };
+
+  const selectEvent = (id: string) => {
+    if (id === activeEventId) return;
+    setActiveEventId(id);
+    restartMap();
   };
 
   const screen = useMemo(() => {
@@ -190,6 +210,29 @@ export default function App() {
 
   return (
     <main className="experience-shell" data-progress={progress.status}>
+      <div className="experience-controls" aria-label="Event variants">
+        <div className="event-chips">
+          {JOURNEY_EVENTS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={`event-chip${activeEventId === item.id ? " event-chip--active" : ""}`}
+              onClick={() => selectEvent(item.id)}
+            >
+              {item.chipLabel}
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="scene-reset"
+          aria-label="Reset scene"
+          onClick={restartMap}
+        >
+          <RotateCcw size={18} />
+        </button>
+      </div>
+
       <div className="device">
         <div className="device__screen">
           {screen}
