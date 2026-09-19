@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import mapBackground from "@/assets/map/figma/van-page.png";
 import journeyVan from "@/assets/map/figma/journey-van.png";
 
@@ -15,23 +15,18 @@ export default function MindMap({
   arrived = false,
   onArrived,
 }: MindMapProps) {
-  const arrivedRef = useRef(false);
+  const signaledRef = useRef(false);
   const onArrivedRef = useRef(onArrived);
   onArrivedRef.current = onArrived;
 
-  if (!traveling && !arrived) {
-    arrivedRef.current = false;
-  }
+  useEffect(() => {
+    if (traveling) signaledRef.current = false;
+  }, [traveling]);
 
   const signalArrived = () => {
-    if (arrivedRef.current || completed) return;
-    arrivedRef.current = true;
+    if (signaledRef.current || completed || !traveling) return;
+    signaledRef.current = true;
     onArrivedRef.current?.();
-  };
-
-  const handleTravelEnd = () => {
-    if (!traveling) return;
-    signalArrived();
   };
 
   return (
@@ -64,7 +59,7 @@ export default function MindMap({
           width={118}
           height={146}
           draggable={false}
-          onAnimationEnd={handleTravelEnd}
+          onAnimationEnd={signalArrived}
         />
       </div>
     </section>
