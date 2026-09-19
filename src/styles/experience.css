@@ -247,11 +247,14 @@ button {
   user-select: none;
 }
 
+/* Figma 2205:11454 — flipped horizontally (relativeTransform scaleX -1) */
 .map-landmark--stand {
-  left: 178px;
+  left: 335px;
   top: 632px;
   width: 174px;
   height: 174px;
+  transform: scaleX(-1);
+  transform-origin: top left;
 }
 
 .map-landmark--stand img {
@@ -264,26 +267,32 @@ button {
   user-select: none;
 }
 
+/* Figma 2205:14923 — Bebas Neue on the blank roof sign */
 .map-landmark__stand-title {
   position: absolute;
   z-index: 3;
-  left: 200px;
-  top: 654px;
-  width: 66px;
-  height: 15px;
-  display: grid;
-  place-items: center;
-  border-radius: 1px;
-  background: #f4eee4;
-  box-shadow: inset 0 0 0 1px rgba(58, 30, 19, 0.18);
-  color: #1a1512;
-  font-family: Inter, system-ui, sans-serif;
-  font-size: 6.5px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  text-align: center;
+  left: 202.0859375px;
+  top: 656.3046875px;
+  width: 61.862683057785034px;
+  height: 19.124179363250732px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  color: #000;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 12.82157039642334px;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.2564px;
+  line-height: normal;
+  text-align: left;
   text-transform: uppercase;
+  white-space: nowrap;
+  transform: matrix(0.997785210609436, -0.06651902198791504, 0, 1, 0, 0);
+  transform-origin: top left;
   pointer-events: none;
   user-select: none;
 }
