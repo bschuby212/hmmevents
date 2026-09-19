@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import StatusBarsComponent from "@/imports/StatusBars";
 import coast from "@/assets/placement/coast.png";
 import van from "@/assets/placement/van.png";
+import sideVan from "@/assets/drive-off/side-van.png";
 import type { JourneyEvent } from "@/app/data/events";
 
 export type StickerTransform = {
@@ -30,6 +31,9 @@ const SCENE_WIDTH = 393;
 const VAN_VISIBLE_MIN = 140;
 const X_BOUNDS = { min: 101, max: 984 };
 const Y_BOUNDS = { min: 331, max: 432 };
+const DRIVE_OFF_X = { min: 8.7, max: 91.5 };
+const DRIVE_OFF_Y = { min: 47.3, max: 61.7 };
+const DRIVE_OFF_DURATION = 2600;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
@@ -47,6 +51,7 @@ export default function StickerPlacement({
 }: StickerPlacementProps) {
   const [placement, setPlacement] = useState<StickerTransform>(DEFAULT_PLACEMENT);
   const [isDragging, setIsDragging] = useState(false);
+  const [drivingOff, setDrivingOff] = useState(false);
   const gesture = useRef<{
     startX: number;
     startY: number;
@@ -60,8 +65,19 @@ export default function StickerPlacement({
   const vanOffsetRef = useRef(0);
   const pendingOffsetRef = useRef(0);
   const frameRef = useRef(0);
+  const onConfirmRef = useRef(onConfirm);
+  onConfirmRef.current = onConfirm;
 
   useEffect(() => () => window.cancelAnimationFrame(frameRef.current), []);
+  useEffect(() => {
+    if (!drivingOff) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = window.setTimeout(
+      () => onConfirmRef.current(placement),
+      reduced ? 400 : DRIVE_OFF_DURATION,
+    );
+    return () => window.clearTimeout(timer);
+  }, [drivingOff, placement]);
 
   const renderVanOffset = (next: number) => {
     pendingOffsetRef.current = next;
@@ -145,6 +161,30 @@ export default function StickerPlacement({
     setIsDragging(false);
   };
 
+  if (drivingOff) {
+    const left = DRIVE_OFF_X.min +
+      ((placement.x - X_BOUNDS.min) / (X_BOUNDS.max - X_BOUNDS.min)) *
+        (DRIVE_OFF_X.max - DRIVE_OFF_X.min);
+    const top = DRIVE_OFF_Y.min +
+      ((placement.y - Y_BOUNDS.min) / (Y_BOUNDS.max - Y_BOUNDS.min)) *
+        (DRIVE_OFF_Y.max - DRIVE_OFF_Y.min);
+
+    return (
+      <section className="drive-off-screen" aria-label="Van driving back to the Healthy Mind Map">
+        <img className="drive-off-coast" src={coast} alt="" draggable={false} />
+        <div className="drive-off-van-wrap drive-off-van-wrap--driving">
+          <img className="drive-off-van" src={sideVan} alt="Blue camper van driving away" draggable={false} />
+          <div className="drive-off-sticker" style={{ left: `${left}%`, top: `${top}%` }}>
+            <img src={event.rewardSticker} alt="" draggable={false} />
+          </div>
+        </div>
+        <div className="drive-off-status">
+          <StatusBarsComponent />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="placement-screen" aria-label="Place your Bigfoot sticker">
       <div
@@ -195,7 +235,7 @@ export default function StickerPlacement({
       <div className="placement-panel">
         <h1>Place Your Sticker</h1>
         <p>Drag your van to adjust the view, then place your sticker.</p>
-        <button type="button" onClick={() => onConfirm(placement)}>
+        <button type="button" onClick={() => setDrivingOff(true)}>
           Place Sticker
         </button>
       </div>

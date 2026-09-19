@@ -162,7 +162,7 @@ button {
 
 .map-tree--one { left: 340px; top: 132px; width: 39px; height: 46px; }
 .map-tree--two { left: 33px; top: 385px; width: 39px; height: 47px; }
-.map-tree--three { left: 157px; top: 598px; width: 39px; height: 46px; }
+.map-tree--three { left: 218px; top: 598px; width: 39px; height: 46px; }
 .map-tree--four { left: 279px; top: 407px; width: 39px; height: 47px; }
 .map-tree--five { left: 18px; top: 749px; width: 39px; height: 46px; }
 
@@ -201,7 +201,7 @@ button {
   top: 0;
   width: 145px;
   height: 149px;
-  transform: translate3d(43.5px, 615.5px, 0) rotate(-54deg);
+  transform: translate3d(43.5px, 615.5px, 0) rotate(-168deg);
   transform-origin: center;
   will-change: transform;
   pointer-events: none;
@@ -213,7 +213,7 @@ button {
 
 .mind-map--arrived .map-world__van,
 .mind-map--completed .map-world__van {
-  transform: translate3d(205.5px, 226.5px, 0) rotate(-51deg);
+  transform: translate3d(205.5px, 226.5px, 0) rotate(-165deg);
 }
 
 .mystery-stop {
@@ -635,19 +635,99 @@ button {
   --fill-0: #1c1c1e;
 }
 
+.drive-off-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  overflow: hidden;
+  background: #c5d4e8;
+}
+
+.drive-off-coast {
+  position: absolute;
+  left: -89px;
+  top: -360px;
+  width: 572px;
+  height: 1240px;
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drive-off-van-wrap {
+  position: absolute;
+  left: 2px;
+  top: 350px;
+  width: 398px;
+  height: 225px;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.drive-off-van-wrap--driving {
+  animation: drive-off-exit 2.6s cubic-bezier(.4, 0, .2, 1) forwards;
+}
+
+.drive-off-van {
+  position: absolute;
+  left: -6.61%;
+  top: -66.25%;
+  width: 114.36%;
+  height: 204.42%;
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drive-off-sticker {
+  position: absolute;
+  z-index: 1;
+  width: 22px;
+  height: 24px;
+  overflow: hidden;
+  clip-path: ellipse(48% 49% at 50% 50%);
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .27));
+  pointer-events: none;
+}
+
+.drive-off-sticker img {
+  position: absolute;
+  left: -6px;
+  top: -10px;
+  width: 34px;
+  height: 39px;
+  max-width: none;
+  user-select: none;
+}
+
+.drive-off-status {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  pointer-events: none;
+}
+
 @keyframes map-camera {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(0, 36px, 0); }
 }
 
 @keyframes van-travel {
-  0% { transform: translate3d(43.5px, 615.5px, 0) rotate(-54deg); }
-  20% { transform: translate3d(46.5px, 580.5px, 0) rotate(-56deg); }
-  40% { transform: translate3d(54.5px, 529.5px, 0) rotate(-56deg); }
-  55% { transform: translate3d(83.5px, 444.5px, 0) rotate(-34deg); }
-  70% { transform: translate3d(132.5px, 375.5px, 0) rotate(-38deg); }
-  85% { transform: translate3d(177.5px, 317.5px, 0) rotate(-46deg); }
-  100% { transform: translate3d(205.5px, 226.5px, 0) rotate(-51deg); }
+  0% { transform: translate3d(43.5px, 615.5px, 0) rotate(-168deg); }
+  20% { transform: translate3d(46.5px, 580.5px, 0) rotate(-171deg); }
+  40% { transform: translate3d(54.5px, 529.5px, 0) rotate(-170deg); }
+  55% { transform: translate3d(83.5px, 444.5px, 0) rotate(-147deg); }
+  70% { transform: translate3d(132.5px, 375.5px, 0) rotate(-151deg); }
+  85% { transform: translate3d(177.5px, 317.5px, 0) rotate(-159deg); }
+  100% { transform: translate3d(205.5px, 226.5px, 0) rotate(-165deg); }
+}
+
+@keyframes drive-off-exit {
+  0%, 12% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(120%, 0, 0); }
 }
 
 @media (max-width: 480px) {
@@ -674,6 +754,10 @@ button {
 @media (prefers-reduced-motion: reduce) {
   .mind-map--traveling .map-world,
   .mind-map--traveling .map-world__van {
+    animation-duration: 1ms;
+  }
+
+  .drive-off-van-wrap--driving {
     animation-duration: 1ms;
   }
 
