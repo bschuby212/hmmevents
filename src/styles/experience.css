@@ -50,7 +50,7 @@ button {
 
 /* Healthy Mind Map */
 .mind-map {
-  --travel-duration: 5.4s;
+  --travel-duration: 4.5s;
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -250,17 +250,6 @@ button {
   font-weight: 800;
   line-height: 1;
   padding-bottom: 7px;
-}
-
-.mystery-stop--completed .mystery-stop__inset {
-  padding: 4px;
-}
-
-.mystery-stop--completed .mystery-stop__inset img {
-  width: 76px;
-  height: 76px;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .2));
 }
 
 .mystery-stop__post {

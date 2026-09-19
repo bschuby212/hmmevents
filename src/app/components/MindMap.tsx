@@ -10,7 +10,6 @@ import treeDark from "@/assets/map/figma/tree-dark.svg";
 import treeLight from "@/assets/map/figma/tree-light.svg";
 import hillsLight from "@/assets/map/figma/hills-light.svg";
 import hillDark from "@/assets/map/figma/hill-dark.svg";
-import bigfootSticker from "@/assets/stickers/bigfoot.png";
 
 type MindMapProps = {
   completed?: boolean;
@@ -19,21 +18,12 @@ type MindMapProps = {
   onArrived?: () => void;
 };
 
-function MysteryStop({ completed = false }: { completed?: boolean }) {
+function MysteryStop() {
   return (
-    <div
-      className={`mystery-stop${completed ? " mystery-stop--completed" : ""}`}
-      aria-label={completed ? "Completed Sasquatch destination" : "Mystery stop ahead"}
-    >
+    <div className="mystery-stop" aria-label="Mystery stop ahead">
       <span className="mystery-stop__post mystery-stop__post--top" />
       <div className="mystery-stop__sign">
-        <div className="mystery-stop__inset">
-          {completed ? (
-            <img src={bigfootSticker} alt="" draggable={false} />
-          ) : (
-            "?"
-          )}
-        </div>
+        <div className="mystery-stop__inset">?</div>
       </div>
       <span className="mystery-stop__post mystery-stop__post--bottom" />
     </div>
@@ -93,7 +83,7 @@ export default function MindMap({
         <img className="map-landmark map-landmark--stand" src={stickerStand} alt="Sticker Stand" draggable={false} />
         <img className="map-landmark map-landmark--gold" src={goldStar} alt="Gold Star" draggable={false} />
         <img className="map-landmark map-landmark--silver" src={silverStar} alt="Silver Star" draggable={false} />
-        <MysteryStop completed={completed} />
+        <MysteryStop />
         <img
           className="map-world__van"
           src={mapVan}
