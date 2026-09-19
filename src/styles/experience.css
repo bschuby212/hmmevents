@@ -99,25 +99,22 @@ button {
 
 .map-hill {
   position: absolute;
-  border-radius: 50%;
-  background: #8dca9d;
-  opacity: .9;
+  max-width: none;
+  pointer-events: none;
 }
 
-.map-hill--one {
-  left: -88px;
-  top: 112px;
-  width: 250px;
-  height: 165px;
-  transform: rotate(-14deg);
+.map-hill--light {
+  left: 16px;
+  top: 120px;
+  width: 236px;
+  height: 77px;
 }
 
-.map-hill--two {
-  left: -54px;
-  top: 188px;
-  width: 160px;
-  height: 142px;
-  background: #43885a;
+.map-hill--dark {
+  left: -74px;
+  top: 202px;
+  width: 174px;
+  height: 59.5px;
 }
 
 .map-road {
@@ -184,7 +181,7 @@ button {
 }
 
 .map-landmark--gold {
-  left: 77px;
+  left: 74px;
   top: 704px;
   width: 81px;
   height: 83px;
@@ -192,7 +189,7 @@ button {
 
 .map-landmark--silver {
   left: 225px;
-  top: 252px;
+  top: 263px;
   width: 109px;
   height: 99px;
 }

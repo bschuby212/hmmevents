@@ -8,6 +8,8 @@ import goldStar from "@/assets/map/figma/gold-star.svg";
 import stickerStand from "@/assets/map/figma/sticker-stand.svg";
 import treeDark from "@/assets/map/figma/tree-dark.svg";
 import treeLight from "@/assets/map/figma/tree-light.svg";
+import hillsLight from "@/assets/map/figma/hills-light.svg";
+import hillDark from "@/assets/map/figma/hill-dark.svg";
 
 type MindMapProps = {
   completed?: boolean;
@@ -65,8 +67,8 @@ export default function MindMap({
       <div className="map-world">
         <div className="map-world__base" />
         <img className="map-world__topography" src={topography} alt="" draggable={false} />
-        <div className="map-hill map-hill--one" />
-        <div className="map-hill map-hill--two" />
+        <img className="map-hill map-hill--light" src={hillsLight} alt="" draggable={false} />
+        <img className="map-hill map-hill--dark" src={hillDark} alt="" draggable={false} />
         <svg className="map-road" viewBox="0 0 393 930" aria-hidden="true">
           <path className="map-road__shoulder" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
           <path className="map-road__surface" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
