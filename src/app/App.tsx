@@ -62,15 +62,39 @@ export default function App() {
   const nextAssets = useRef<Promise<unknown>>(Promise.resolve());
   const transitionTimers = useRef<number[]>([]);
   const travelStartTimer = useRef(0);
+  const travelDoneTimer = useRef(0);
+  const eventOpenTimer = useRef(0);
+  const arrivedLock = useRef(false);
+  const travelDurationMs = 4500;
+  const eventOpenDelayMs = 900;
 
   const clearTransitionTimers = () => {
     transitionTimers.current.forEach((timer) => window.clearTimeout(timer));
     transitionTimers.current = [];
   };
 
+  const clearTravelTimers = () => {
+    window.clearTimeout(travelStartTimer.current);
+    window.clearTimeout(travelDoneTimer.current);
+    window.clearTimeout(eventOpenTimer.current);
+  };
+
+  const openEventAfterArrival = () => {
+    if (arrivedLock.current) return;
+    arrivedLock.current = true;
+    setTraveling(false);
+    setPhase("arrival");
+    setProgress((current) => ({ ...current, status: "arrived" }));
+    window.clearTimeout(eventOpenTimer.current);
+    eventOpenTimer.current = window.setTimeout(() => {
+      setPhase("event");
+    }, eventOpenDelayMs);
+  };
+
   const restartMap = () => {
     clearTransitionTimers();
-    window.clearTimeout(travelStartTimer.current);
+    clearTravelTimers();
+    arrivedLock.current = false;
     setTraveling(false);
     setProgress(INITIAL_PROGRESS);
     setStickerTransition("idle");
@@ -83,15 +107,25 @@ export default function App() {
     preloadImages([vanPage, journeyVan]);
     travelStartTimer.current = window.setTimeout(() => setTraveling(true), 850);
     return () => {
-      window.clearTimeout(travelStartTimer.current);
+      clearTravelTimers();
       clearTransitionTimers();
     };
   }, []);
 
   useEffect(() => {
     if (!traveling) return;
+    arrivedLock.current = false;
     setProgress((current) => ({ ...current, status: "traveling" }));
     nextAssets.current = preloadImages([event.eventArtwork, event.rewardArtwork]);
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.clearTimeout(travelDoneTimer.current);
+    travelDoneTimer.current = window.setTimeout(
+      () => openEventAfterArrival(),
+      reduced ? 120 : travelDurationMs,
+    );
+
+    return () => window.clearTimeout(travelDoneTimer.current);
   }, [event.eventArtwork, event.rewardArtwork, traveling]);
 
   useEffect(() => {
@@ -144,12 +178,7 @@ export default function App() {
           key={activeEventId}
           traveling={traveling}
           arrived={phase === "arrival"}
-          onArrived={() => {
-            setTraveling(false);
-            setPhase("arrival");
-            setProgress((current) => ({ ...current, status: "arrived" }));
-            window.setTimeout(() => setPhase("event"), 900);
-          }}
+          onArrived={openEventAfterArrival}
         />
       );
     }

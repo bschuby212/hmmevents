@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import mapBackground from "@/assets/map/figma/van-page.png";
 import journeyVan from "@/assets/map/figma/journey-van.png";
 
@@ -15,35 +15,23 @@ export default function MindMap({
   arrived = false,
   onArrived,
 }: MindMapProps) {
-  const arrivedRef = useRef(completed);
+  const arrivedRef = useRef(false);
   const onArrivedRef = useRef(onArrived);
   onArrivedRef.current = onArrived;
 
-  useEffect(() => {
-    if (!traveling) return;
+  if (!traveling && !arrived) {
     arrivedRef.current = false;
+  }
 
-    const fallback = window.setTimeout(() => {
-      if (arrivedRef.current || completed) return;
-      arrivedRef.current = true;
-      onArrivedRef.current?.();
-    }, 4800);
-
-    return () => window.clearTimeout(fallback);
-  }, [completed, traveling]);
-
-  useEffect(() => {
-    if (!traveling || completed || arrivedRef.current) return;
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    arrivedRef.current = true;
-    const timer = window.setTimeout(() => onArrivedRef.current?.(), 120);
-    return () => window.clearTimeout(timer);
-  }, [completed, traveling]);
-
-  const handleTravelEnd = (event: React.AnimationEvent<HTMLImageElement>) => {
-    if (event.animationName !== "van-travel" || arrivedRef.current) return;
+  const signalArrived = () => {
+    if (arrivedRef.current || completed) return;
     arrivedRef.current = true;
     onArrivedRef.current?.();
+  };
+
+  const handleTravelEnd = () => {
+    if (!traveling) return;
+    signalArrived();
   };
 
   return (
@@ -61,7 +49,6 @@ export default function MindMap({
       }
     >
       <div className="map-world">
-        {/* Exact Figma Van Page background (2205:11235) — static */}
         <img
           className="map-exact"
           src={mapBackground}
@@ -70,7 +57,6 @@ export default function MindMap({
           height={852}
           draggable={false}
         />
-        {/* Figma van 2205:11430 — moves on top of the background */}
         <img
           className="map-world__van"
           src={journeyVan}
