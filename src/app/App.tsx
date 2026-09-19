@@ -101,22 +101,42 @@ export default function App() {
 
     const fitStage = () => {
       const pad = 16;
-      const viewportW =
-        window.visualViewport?.width ?? window.innerWidth ?? 0;
-      const viewportH =
-        window.visualViewport?.height ?? window.innerHeight ?? 0;
-      // Percentage heights can collapse in iframes; fall back to the viewport.
-      const shellW = shell.clientWidth > 32 ? shell.clientWidth : viewportW;
-      const shellH = shell.clientHeight > 32 ? shell.clientHeight : viewportH;
-      const availableWidth = Math.max((shellW || viewportW || 393) - pad, 1);
-      const availableHeight = Math.max((shellH || viewportH || 852) - pad, 1);
+      const viewportW = Math.max(
+        window.visualViewport?.width ?? 0,
+        window.innerWidth || 0,
+        360,
+      );
+      const viewportH = Math.max(
+        window.visualViewport?.height ?? 0,
+        window.innerHeight || 0,
+        640,
+      );
+
+      // Percentage heights can collapse to 0 in embeds; force a real viewport box.
+      if (shell.clientHeight < 64 || shell.clientWidth < 64) {
+        for (const el of [document.documentElement, document.body]) {
+          el.style.minHeight = `${viewportH}px`;
+          el.style.height = `${viewportH}px`;
+        }
+        const root = document.getElementById("root");
+        if (root) {
+          root.style.minHeight = `${viewportH}px`;
+          root.style.height = `${viewportH}px`;
+        }
+        shell.style.minWidth = `${viewportW}px`;
+        shell.style.width = `${viewportW}px`;
+        shell.style.minHeight = `${viewportH}px`;
+        shell.style.height = `${viewportH}px`;
+      }
+
+      const availableWidth = Math.max(shell.clientWidth - pad, viewportW - pad, 1);
+      const availableHeight = Math.max(shell.clientHeight - pad, viewportH - pad, 1);
       const naturalWidth = stage.offsetWidth || 421;
       const naturalHeight = stage.offsetHeight || 938;
       const rawScale = Math.min(
         availableWidth / naturalWidth,
         availableHeight / naturalHeight,
       );
-      // Never shrink the mock into an invisible speck (white screen).
       const scale =
         Number.isFinite(rawScale) && rawScale > 0
           ? Math.max(rawScale, 0.2)
@@ -131,10 +151,12 @@ export default function App() {
     observer.observe(shell);
     observer.observe(stage);
     window.addEventListener("resize", fitStage);
+    window.visualViewport?.addEventListener("resize", fitStage);
     window.addEventListener("orientationchange", fitStage);
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", fitStage);
+      window.visualViewport?.removeEventListener("resize", fitStage);
       window.removeEventListener("orientationchange", fitStage);
     };
   }, []);
