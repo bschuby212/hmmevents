@@ -137,17 +137,6 @@ button {
   inset: 0;
   width: 393px;
   height: 852px;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-}
-
-.mind-map--traveling .map-world {
-  animation: map-camera var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
-}
-
-.mind-map--arrived .map-world,
-.mind-map--completed .map-world {
-  transform: translate3d(0, 36px, 0);
 }
 
 .map-exact {
@@ -161,6 +150,47 @@ button {
   pointer-events: none;
   user-select: none;
 }
+
+/* Figma van 2205:11430 — only the van moves */
+.map-world__van {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: 117.79674530029297px;
+  height: 146.23045349121094px;
+  max-width: none;
+  object-fit: fill;
+  transform: matrix(
+    -0.7880107164382935,
+    -0.6156614422798157,
+    0.6156614422798157,
+    -0.7880107164382935,
+    158.29881286621094,
+    557.7612915039062
+  );
+  transform-origin: 0 0;
+  will-change: transform;
+  pointer-events: none;
+  user-select: none;
+}
+
+.mind-map--traveling .map-world__van {
+  animation: van-travel var(--travel-duration) linear both;
+}
+
+.mind-map--arrived .map-world__van,
+.mind-map--completed .map-world__van {
+  transform: matrix(
+    -0.7880107164382935,
+    -0.6156614422798157,
+    0.6156614422798157,
+    -0.7880107164382935,
+    220,
+    250
+  );
+}
+
 
 
 .map-status,
@@ -589,11 +619,7 @@ button {
   transition: transform 340ms cubic-bezier(.4, .05, .25, 1);
 }
 
-@keyframes map-camera {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(0, 36px, 0); }
-}
-
+/* Only the van moves — map background stays fixed */
 @keyframes van-travel {
   0% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 158.29881286621094, 557.7612915039062); }
   5% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 161.38387222290038, 542.3732269287109); }
@@ -629,7 +655,6 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mind-map--traveling .map-world,
   .mind-map--traveling .map-world__van {
     animation-duration: 1ms;
   }

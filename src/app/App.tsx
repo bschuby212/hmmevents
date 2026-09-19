@@ -9,6 +9,7 @@ import {
   type EventProgress,
 } from "@/app/data/events";
 import vanPage from "@/assets/map/figma/van-page.png";
+import journeyVan from "@/assets/map/figma/journey-van.png";
 import coast from "@/assets/placement/coast.png";
 import placementVan from "@/assets/placement/van.png";
 
@@ -79,7 +80,7 @@ export default function App() {
 
   useEffect(() => {
     // Never block the first paint on asset decode — show the map immediately.
-    preloadImages([vanPage]);
+    preloadImages([vanPage, journeyVan]);
     travelStartTimer.current = window.setTimeout(() => setTraveling(true), 850);
     return () => {
       window.clearTimeout(travelStartTimer.current);
