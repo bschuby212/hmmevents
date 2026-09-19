@@ -201,10 +201,10 @@ button {
   z-index: 4;
   left: 0;
   top: 0;
-  width: 183px;
-  height: 188px;
-  margin: -94px 0 0 -91.5px;
-  offset-path: path("M 116 742 C 128 660 118 588 156 519 C 194 451 250 405 278 301");
+  width: 145px;
+  height: 149px;
+  margin: -74.5px 0 0 -72.5px;
+  offset-path: path("M 116 690 C 128 635 120 574 156 519 C 194 451 250 405 278 301");
   offset-distance: 0%;
   offset-rotate: auto 24deg;
   transform: translateZ(0);

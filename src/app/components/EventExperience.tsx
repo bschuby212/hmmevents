@@ -97,7 +97,7 @@ export default function EventExperience({
           <span className="text-[14px] leading-[20px] font-bold">{reward ? "Collect Sticker" : "Continue"}</span>
           {!reward && (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5.5 12H19M11 18S5 13.58 5 12S11 6 11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M5 12H18.5M13 6S19 10.42 19 12S13 18 13 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
         </button>
