@@ -15,7 +15,6 @@ import coast from "@/assets/placement/coast.png";
 import placementVan from "@/assets/placement/van.png";
 
 type ExperiencePhase =
-  | "loading"
   | "map"
   | "arrival"
   | "event"
@@ -36,13 +35,17 @@ function preloadImages(sources: string[]) {
       (source) =>
         new Promise<void>((resolve) => {
           const image = new Image();
-          image.src = source;
           const done = () => resolve();
-          if (image.decode) image.decode().then(done).catch(done);
-          else {
-            image.onload = done;
-            image.onerror = done;
-          }
+          const timer = window.setTimeout(done, 2500);
+          image.onload = () => {
+            window.clearTimeout(timer);
+            done();
+          };
+          image.onerror = () => {
+            window.clearTimeout(timer);
+            done();
+          };
+          image.src = source;
         }),
     ),
   );
@@ -52,7 +55,7 @@ export default function App() {
   const [activeEventId, setActiveEventId] = useState(JOURNEY_EVENTS[0].id);
   const event =
     JOURNEY_EVENTS.find((item) => item.id === activeEventId) ?? JOURNEY_EVENTS[0];
-  const [phase, setPhase] = useState<ExperiencePhase>("loading");
+  const [phase, setPhase] = useState<ExperiencePhase>("map");
   const [traveling, setTraveling] = useState(false);
   const [progress, setProgress] = useState<EventProgress>(INITIAL_PROGRESS);
   const [stickerTransition, setStickerTransition] =
@@ -80,14 +83,10 @@ export default function App() {
   };
 
   useEffect(() => {
-    let active = true;
-    preloadImages([mapTopography, mapWater, mapVan]).then(() => {
-      if (!active) return;
-      setPhase("map");
-      travelStartTimer.current = window.setTimeout(() => setTraveling(true), 850);
-    });
+    // Never block the first paint on asset decode — show the map immediately.
+    preloadImages([mapTopography, mapWater, mapVan]);
+    travelStartTimer.current = window.setTimeout(() => setTraveling(true), 850);
     return () => {
-      active = false;
       window.clearTimeout(travelStartTimer.current);
       clearTransitionTimers();
     };
@@ -211,9 +210,6 @@ export default function App() {
   };
 
   const screen = useMemo(() => {
-    if (phase === "loading") {
-      return <div className="experience-loading" aria-label="Preparing Healthy Mind Map" />;
-    }
     if (phase === "map" || phase === "arrival") {
       return (
         <MindMap
