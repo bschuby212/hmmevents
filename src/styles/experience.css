@@ -1,0 +1,656 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: inherit;
+}
+
+.experience-shell {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #ecebe8;
+}
+
+.device {
+  position: relative;
+  width: 421px;
+  height: 880px;
+  padding: 14px;
+  flex: none;
+  border-radius: 61px;
+  background: linear-gradient(145deg, #393a3e, #111214 62%, #34353a);
+  box-shadow: 0 24px 70px rgba(24, 32, 31, 0.18);
+  zoom: min(1, calc((100vw - 24px) / 421px), calc((100dvh - 24px) / 880px));
+}
+
+.device__screen {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  overflow: hidden;
+  border-radius: 47px;
+  background: #faf8f7;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+.experience-loading {
+  position: absolute;
+  inset: 0;
+  background: #c5d4a8;
+}
+
+.completion-note {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  z-index: 80;
+  margin: 0;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(6, 50, 53, 0.86);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: completion-note-in .35s ease-out both;
+}
+
+/* Healthy Mind Map */
+.mind-map {
+  --travel-duration: 4.8s;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #b9d8a6;
+  color: #063235;
+}
+
+.map-world {
+  position: absolute;
+  left: 0;
+  top: -54px;
+  width: 393px;
+  height: 906px;
+  transform: translate3d(0, 0, 0);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.mind-map--traveling .map-world {
+  animation: map-camera var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
+}
+
+.mind-map--completed .map-world {
+  transform: translate3d(0, 220px, 0);
+}
+
+.map-world__art {
+  position: absolute;
+  inset: 0;
+  width: 393px;
+  height: 906px;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.map-world__van {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: 106px;
+  height: 108px;
+  margin: -54px 0 0 -53px;
+  offset-path: path("M 302 695 C 302 630 282 577 240 516 C 200 460 150 403 123 366 C 118 356 118 346 119 340");
+  offset-distance: 0%;
+  offset-rotate: auto 135deg;
+  transform: translateZ(0);
+  transform-origin: center;
+  will-change: offset-distance;
+  pointer-events: none;
+}
+
+.mind-map--traveling .map-world__van {
+  animation: van-travel var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
+}
+
+.mind-map--completed .map-world__van {
+  offset-distance: 100%;
+}
+
+.mystery-stop {
+  position: absolute;
+  z-index: 3;
+  left: 36px;
+  top: 166px;
+  width: 166px;
+  height: 184px;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 5px rgba(31, 63, 42, .22));
+}
+
+.mystery-stop__sign {
+  position: absolute;
+  left: 34px;
+  top: 28px;
+  width: 100px;
+  height: 119px;
+  padding: 6px;
+  border-radius: 13px;
+  background: #468a56;
+}
+
+.mystery-stop__inset {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 8px;
+  color: white;
+  font-family: Inter, sans-serif;
+  font-size: 76px;
+  font-weight: 800;
+  line-height: 1;
+  padding-bottom: 8px;
+}
+
+.mystery-stop__post {
+  position: absolute;
+  left: 82px;
+  width: 5px;
+  border: 1px solid rgba(84, 83, 71, .45);
+  background: repeating-linear-gradient(0deg, #d6d6cd 0 4px, #b9b9b2 4px 6px);
+}
+
+.mystery-stop__post--top {
+  top: 17px;
+  height: 14px;
+}
+
+.mystery-stop__post--bottom {
+  top: 146px;
+  height: 34px;
+}
+
+.destination-complete {
+  position: absolute;
+  z-index: 4;
+  left: 83px;
+  top: 300px;
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  border: 7px solid rgba(255,255,255,.82);
+  border-radius: 50%;
+  background: #468a56;
+  box-shadow: 0 7px 12px rgba(27, 59, 36, .24);
+}
+
+.destination-complete span {
+  color: white;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.map-header {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 119px;
+  display: flex;
+  align-items: flex-start;
+  padding: 63px 18px 0;
+  background: rgba(249,247,246,.82);
+  backdrop-filter: blur(16px);
+}
+
+.map-header__back {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #f1f1f1;
+  font-size: 30px;
+  line-height: 1;
+  padding: 0 0 4px 0;
+}
+
+.map-header__copy {
+  flex: 1;
+  padding-top: 2px;
+  text-align: center;
+}
+
+.map-header__copy h1 {
+  margin: 0;
+  color: #063235;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.5px;
+}
+
+.map-header__copy p {
+  margin: 5px 0 0;
+  color: #737272;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.map-header__miles {
+  width: 47px;
+  padding-top: 10px;
+  white-space: nowrap;
+  color: #063235;
+}
+
+.map-header__miles strong {
+  font-size: 16px;
+}
+
+.map-header__miles span {
+  margin-left: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  opacity: .5;
+}
+
+.map-status,
+.event-status,
+.placement-status {
+  position: absolute;
+  z-index: 50;
+  left: 0;
+  right: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.map-status {
+  color: #1c1c1e;
+  --fill-0: #1c1c1e;
+}
+
+.map-status p,
+.placement-status p {
+  color: #1c1c1e !important;
+}
+
+.map-progress {
+  position: absolute;
+  z-index: 12;
+  left: 134px;
+  top: 109px;
+  width: 125px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(6,50,53,.12);
+}
+
+.map-progress__fill {
+  display: block;
+  width: 8%;
+  height: 100%;
+  border-radius: inherit;
+  background: #765cd8;
+}
+
+.mind-map--traveling .map-progress__fill {
+  animation: progress-drive var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
+}
+
+.map-progress__fill--complete {
+  width: 100%;
+}
+
+/* Bigfoot event and reward */
+.event-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #faf8f7;
+  color: #063235;
+}
+
+.event-screen__art {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 393px;
+  height: 620px;
+  overflow: hidden;
+  transform-origin: center;
+}
+
+.event-screen__image {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.event-screen__image--discovery {
+  left: -29px;
+  top: -148px;
+  width: 461px;
+  height: 819px;
+}
+
+.event-screen__image--reward {
+  left: -260px;
+  top: -395px;
+  width: 908px;
+  height: 1135px;
+}
+
+.event-screen__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.58), rgba(0,0,0,.42) 48%, transparent 100%);
+}
+
+.reward-sticker {
+  position: absolute;
+  z-index: 8;
+  left: 44px;
+  top: 140px;
+  width: 304px;
+  height: 355px;
+}
+
+.reward-sticker__bloom {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: rgba(0,0,0,.24);
+  backdrop-filter: blur(14px);
+}
+
+.reward-sticker img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.event-screen__panel {
+  position: absolute;
+  z-index: 12;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 272px;
+  padding: 36px 35px 24px;
+  border-radius: 30px 30px 0 0;
+  background: #faf8f7;
+  text-align: center;
+}
+
+.event-screen__panel h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.5px;
+}
+
+.event-screen__panel p {
+  max-width: 310px;
+  margin: 9px auto 0;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -.4px;
+}
+
+.event-screen__date {
+  margin-top: 13px;
+  color: rgba(6,50,53,.66);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.event-continue {
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  bottom: 24px;
+  width: 321px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 12px;
+  background: #765cd8;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.event-continue__arrow {
+  font-size: 20px;
+}
+
+.event-status {
+  --fill-0: #1c1c1e;
+}
+
+.event-status p {
+  color: #1c1c1e !important;
+}
+
+.event-status--light {
+  --fill-0: white;
+}
+
+.event-status--light p {
+  color: white !important;
+}
+
+/* Beach sticker placement */
+.placement-screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #b8d5e9;
+  color: #063235;
+  touch-action: none;
+}
+
+.placement-beach {
+  position: absolute;
+  left: -24px;
+  top: -315px;
+  width: 440px;
+  height: 900px;
+  overflow: hidden;
+  transform-origin: center;
+  transition: transform .18s ease-out;
+  will-change: transform;
+}
+
+.placement-beach img {
+  width: 440px;
+  height: 893px;
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.placement-van {
+  position: absolute;
+  z-index: 4;
+  left: -175px;
+  top: 155px;
+  width: 760px;
+  height: 431px;
+  touch-action: none;
+  will-change: transform;
+  cursor: grab;
+}
+
+.placement-van:active {
+  cursor: grabbing;
+}
+
+.placement-van__art {
+  position: absolute;
+  inset: 0;
+  width: 760px;
+  height: 431px;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.placement-sticker {
+  position: absolute;
+  z-index: 5;
+  width: 68px;
+  height: 75px;
+  overflow: hidden;
+  clip-path: polygon(18% 2%, 82% 1%, 97% 17%, 96% 78%, 78% 98%, 20% 96%, 3% 78%, 2% 18%);
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.28));
+  touch-action: none;
+  cursor: grab;
+  transition: filter .16s ease, scale .16s ease;
+}
+
+.placement-sticker--dragging {
+  cursor: grabbing;
+  filter: drop-shadow(0 7px 7px rgba(0,0,0,.3));
+  scale: 1.06;
+}
+
+.placement-sticker img {
+  position: absolute;
+  left: -17px;
+  top: -30px;
+  width: 102px;
+  height: 119px;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.placement-panel {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 313px;
+  padding: 31px 32px 24px;
+  border-radius: 30px 30px 0 0;
+  background: #faf8f7;
+  text-align: center;
+}
+
+.placement-panel h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.5px;
+}
+
+.placement-panel p {
+  max-width: 303px;
+  margin: 12px auto 0;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -.4px;
+}
+
+.placement-panel button {
+  position: absolute;
+  left: 32px;
+  top: 168px;
+  width: 329px;
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+  background: #765cd8;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.placement-status {
+  --fill-0: #1c1c1e;
+}
+
+@keyframes map-camera {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, 220px, 0); }
+}
+
+@keyframes van-travel {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+
+@keyframes progress-drive {
+  from { width: 8%; }
+  to { width: 100%; }
+}
+
+@keyframes completion-note-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 480px) {
+  .experience-shell {
+    align-items: flex-start;
+    background: #faf8f7;
+  }
+
+  .device {
+    padding: 0;
+    width: 393px;
+    height: 852px;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    zoom: min(1, calc(100vw / 393px), calc(100dvh / 852px));
+  }
+
+  .device__screen {
+    border-radius: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mind-map--traveling .map-world,
+  .mind-map--traveling .map-world__van,
+  .mind-map--traveling .map-progress__fill {
+    animation-duration: 1ms;
+  }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+  }
+}
