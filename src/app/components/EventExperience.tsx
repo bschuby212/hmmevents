@@ -8,12 +8,14 @@ type EventExperienceProps = {
   event: JourneyEvent;
   mode: "event" | "reward";
   onContinue: () => void;
+  stickerDeparting?: boolean;
 };
 
 export default function EventExperience({
   event,
   mode,
   onContinue,
+  stickerDeparting = false,
 }: EventExperienceProps) {
   const reward = mode === "reward";
   const [stickerVisible, setStickerVisible] = useState(false);
@@ -28,7 +30,7 @@ export default function EventExperience({
   }, [reward]);
 
   return (
-    <section className="absolute inset-0 overflow-hidden bg-[#faf8f7]" aria-label={reward ? "Bigfoot sticker reward" : "Bigfoot event"}>
+    <section className="absolute inset-0 overflow-hidden bg-[#faf8f7]" aria-label={reward ? `${event.title} reward` : event.title}>
       <motion.div
         className="absolute left-0 w-[393px] h-[861px] overflow-hidden"
         style={{ top: -273, zIndex: reward ? 2 : 1 }}
@@ -38,9 +40,7 @@ export default function EventExperience({
       >
         <div
           className="absolute"
-          style={reward
-            ? { left: -260, top: -122, width: 908, height: 1135 }
-            : { left: -29, top: 125, width: 461, height: 819 }}
+          style={reward ? event.rewardFrame : event.eventFrame}
         >
           <img
             className="absolute inset-0 size-full max-w-none object-cover pointer-events-none"
@@ -62,8 +62,11 @@ export default function EventExperience({
       {reward && stickerVisible && (
         <>
           <div className="absolute left-[44.5px] top-[140px] w-[304px] h-[354.35px] rounded-[16px] z-[14]" style={{ backdropFilter: "blur(14px)", background: "rgba(0,0,0,0.28)" }} />
-          <div className="absolute left-[44.5px] top-[140px] w-[304px] h-[354.35px] z-[15]">
-            <img className="size-full object-contain pointer-events-none" src={event.rewardSticker} alt="Sasquatch sticker reward" draggable={false} />
+          <div
+            className="absolute left-[44.5px] top-[140px] w-[304px] h-[354.35px] z-[15] transition-opacity duration-200"
+            style={{ opacity: stickerDeparting ? 0 : 1 }}
+          >
+            <img className="size-full object-contain pointer-events-none" src={event.rewardSticker} alt={`${event.chipLabel} sticker reward`} draggable={false} />
           </div>
         </>
       )}
@@ -103,7 +106,7 @@ export default function EventExperience({
         </button>
       </div>
 
-      <div className={reward ? "absolute inset-x-0 top-0 z-[50] pointer-events-none" : "absolute inset-x-0 top-0 z-[50] pointer-events-none [&_p]:!text-[#1C1C1E] [&_.text-white]:!text-[#1C1C1E]"} style={reward ? undefined : { "--fill-0": "#1C1C1E" } as React.CSSProperties}>
+      <div className="absolute inset-x-0 top-0 z-[50] pointer-events-none event-status--light">
         <StatusBarsComponent />
       </div>
     </section>

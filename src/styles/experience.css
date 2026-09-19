@@ -12,12 +12,87 @@ button {
 
 .experience-shell {
   width: 100%;
-  height: 100dvh;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #ecebe8;
+}
+
+.experience-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  flex: none;
+  width: max-content;
+  /* zoom affects layout (unlike transform), so the mock can't clip to blank */
+  zoom: max(0.35, min(1, calc(100vw / 460px), calc(100dvh / 980px)));
+}
+
+@supports not (zoom: 1) {
+  .experience-stage {
+    transform: scale(max(0.35, min(1, 100vw / 460, 100dvh / 980)));
+    transform-origin: center center;
+  }
+}
+
+.experience-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  background: #ecebe8;
+  gap: 12px;
+  flex: none;
+  z-index: 2;
+}
+
+.event-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.event-chip {
+  border: 1px solid #e4e4e7;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #71717a;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color .16s ease, background .16s ease, border-color .16s ease;
+}
+
+.event-chip:hover {
+  color: #27272a;
+}
+
+.event-chip--active {
+  border-color: #1a1a1a;
+  background: #1a1a1a;
+  color: white;
+}
+
+.scene-reset {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #71717a;
+  box-shadow: 0 1px 2px rgba(24, 24, 27, 0.08);
+  cursor: pointer;
+  transition: color .16s ease, background .16s ease;
+}
+
+.scene-reset:hover {
+  background: white;
+  color: #27272a;
 }
 
 .device {
@@ -29,7 +104,6 @@ button {
   border-radius: 61px;
   background: linear-gradient(145deg, #393a3e, #111214 62%, #34353a);
   box-shadow: 0 24px 70px rgba(24, 32, 31, 0.18);
-  zoom: min(1, calc((100vw - 24px) / 421px), calc((100dvh - 24px) / 880px));
 }
 
 .device__screen {
@@ -48,9 +122,9 @@ button {
   background: #c5d4a8;
 }
 
-/* Healthy Mind Map */
+/* Healthy Mind Map — exact Figma frame 2205:11235 */
 .mind-map {
-  --travel-duration: 5.4s;
+  --travel-duration: 4.5s;
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -62,280 +136,48 @@ button {
   position: absolute;
   inset: 0;
   width: 393px;
-  height: 930px;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
+  height: 852px;
 }
 
-.mind-map--traveling .map-world {
-  animation: map-camera var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
-}
-
-.mind-map--arrived .map-world,
-.mind-map--completed .map-world {
-  transform: translate3d(0, 36px, 0);
-}
-
-.map-world__base {
+.map-exact {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: 0;
   width: 393px;
-  height: 930px;
-  background: #9fd2aa;
-}
-
-.map-world__topography {
-  position: absolute;
-  left: -208px;
-  top: -28px;
-  width: 957px;
-  height: 930px;
+  height: 852px;
   max-width: none;
-  opacity: .34;
-  mix-blend-mode: multiply;
+  display: block;
   pointer-events: none;
   user-select: none;
 }
 
-.map-hill {
-  position: absolute;
-  max-width: none;
-  pointer-events: none;
-}
-
-.map-hill--light {
-  left: 16px;
-  top: 120px;
-  width: 236px;
-  height: 77px;
-}
-
-.map-hill--dark {
-  left: -74px;
-  top: 202px;
-  width: 174px;
-  height: 59.5px;
-}
-
-.map-road {
-  position: absolute;
-  inset: 0;
-  width: 393px;
-  height: 930px;
-  overflow: visible;
-}
-
-.map-road path {
-  fill: none;
-}
-
-.map-road__shoulder {
-  stroke: #b8e0b9;
-  stroke-width: 112;
-}
-
-.map-road__surface {
-  stroke: #063b3e;
-  stroke-width: 68;
-}
-
-.map-road__center {
-  stroke: #e3a318;
-  stroke-width: 3;
-  stroke-dasharray: 8 11;
-}
-
-.map-water {
-  position: absolute;
-  left: 233px;
-  top: 452px;
-  width: 407px;
-  height: 506px;
-  max-width: none;
-  pointer-events: none;
-}
-
-.map-tree {
-  position: absolute;
-  pointer-events: none;
-}
-
-.map-tree--one { left: 340px; top: 132px; width: 39px; height: 46px; }
-.map-tree--two { left: 33px; top: 385px; width: 39px; height: 47px; }
-.map-tree--three { left: 157px; top: 598px; width: 39px; height: 46px; }
-.map-tree--four { left: 279px; top: 407px; width: 39px; height: 47px; }
-.map-tree--five { left: 18px; top: 749px; width: 39px; height: 46px; }
-
-.map-landmark {
-  position: absolute;
-  max-width: none;
-  pointer-events: none;
-  user-select: none;
-}
-
-.map-landmark--stand {
-  left: 178px;
-  top: 622px;
-  width: 174px;
-  height: 174px;
-}
-
-.map-landmark--gold {
-  left: 74px;
-  top: 704px;
-  width: 81px;
-  height: 83px;
-}
-
-.map-landmark--silver {
-  left: 225px;
-  top: 263px;
-  width: 109px;
-  height: 99px;
-}
-
+/* Figma van 2205:11430 — only the van moves, center follows the road */
 .map-world__van {
   position: absolute;
   z-index: 4;
   left: 0;
   top: 0;
-  width: 145px;
-  height: 149px;
-  offset-path: path("M 116 690 C 128 635 120 574 156 519 C 194 451 250 405 278 301");
-  offset-anchor: center;
-  offset-distance: 0%;
-  offset-rotate: auto 24deg;
-  transform: translateZ(0);
-  transform-origin: center;
-  will-change: offset-distance;
+  width: 117.79674530029297px;
+  height: 146.23045349121094px;
+  max-width: none;
+  object-fit: fill;
+  transform-origin: center center;
+  transform: translate(50.6px, 506.88px) rotate(-166.24deg);
+  will-change: transform;
   pointer-events: none;
+  user-select: none;
 }
 
 .mind-map--traveling .map-world__van {
-  animation: van-travel var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
+  animation: van-travel var(--travel-duration) linear both;
 }
 
 .mind-map--arrived .map-world__van,
 .mind-map--completed .map-world__van {
-  offset-distance: 100%;
+  transform: translate(243.1px, 178.88px) rotate(-151.7deg);
 }
 
-.mystery-stop {
-  position: absolute;
-  z-index: 3;
-  left: 67px;
-  top: 140px;
-  width: 187px;
-  height: 198px;
-  pointer-events: none;
-}
 
-.mystery-stop__sign {
-  position: absolute;
-  left: 36px;
-  top: 31px;
-  width: 100px;
-  height: 119px;
-  padding: 6px 7px;
-  border-radius: 12.72px;
-  background: #468a56;
-}
-
-.mystery-stop__inset {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  border: 2px solid white;
-  border-radius: 8px;
-  color: white;
-  font-family: Inter, sans-serif;
-  font-size: 76px;
-  font-weight: 800;
-  line-height: 1;
-  padding-bottom: 7px;
-}
-
-.mystery-stop__post {
-  position: absolute;
-  left: 84px;
-  width: 4px;
-  background: repeating-linear-gradient(0deg, #d6d6cd 0 4px, #b9b9b2 4px 6px);
-}
-
-.mystery-stop__post--top {
-  top: 18px;
-  height: 14px;
-}
-
-.mystery-stop__post--bottom {
-  top: 150px;
-  height: 30px;
-}
-
-.map-header {
-  position: absolute;
-  z-index: 10;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 119px;
-  display: flex;
-  align-items: flex-start;
-  padding: 63px 18px 0;
-  background: rgba(249,247,246,.82);
-  backdrop-filter: blur(16px);
-}
-
-.map-header__back {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: #f1f1f1;
-  padding: 0;
-}
-
-.map-header__copy {
-  flex: 1;
-  padding-top: 2px;
-  text-align: center;
-}
-
-.map-header__copy h1 {
-  margin: 0;
-  color: #063235;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.5px;
-}
-
-.map-header__copy p {
-  margin: 5px 0 0;
-  color: #737272;
-  font-size: 12px;
-  line-height: 1.2;
-}
-
-.map-header__miles {
-  width: 47px;
-  padding-top: 10px;
-  white-space: nowrap;
-  color: #063235;
-}
-
-.map-header__miles strong {
-  font-size: 16px;
-}
-
-.map-header__miles span {
-  margin-left: 2px;
-  font-size: 10px;
-  font-weight: 700;
-  opacity: .5;
-}
 
 .map-status,
 .event-status,
@@ -517,21 +359,22 @@ button {
 
 .placement-beach {
   position: absolute;
-  left: -24px;
-  top: -315px;
-  width: 440px;
-  height: 900px;
+  left: 0;
+  top: -296px;
+  width: 393px;
+  height: 861px;
   overflow: hidden;
   transform-origin: center;
-  transition: transform .18s ease-out;
+  transform: translate3d(0, 0, 0) scale(1.08);
   will-change: transform;
 }
 
 .placement-beach img {
-  width: 440px;
-  height: 893px;
+  width: 393px;
+  height: 861px;
   max-width: none;
   display: block;
+  object-fit: cover;
   pointer-events: none;
   user-select: none;
 }
@@ -539,54 +382,54 @@ button {
 .placement-van {
   position: absolute;
   z-index: 4;
-  left: -175px;
-  top: 155px;
-  width: 760px;
-  height: 431px;
+  left: -330px;
+  top: 47px;
+  width: 1062px;
+  height: 603px;
   touch-action: none;
   will-change: transform;
   cursor: grab;
 }
 
-.placement-van:active {
+.placement-van--dragging {
   cursor: grabbing;
 }
 
 .placement-van__art {
   position: absolute;
   inset: 0;
-  width: 760px;
-  height: 431px;
+  width: 1062px;
+  height: 603px;
   max-width: none;
   pointer-events: none;
   user-select: none;
 }
 
+.placement-alpha-canvas {
+  display: none;
+}
+
 .placement-sticker {
   position: absolute;
   z-index: 5;
-  width: 68px;
-  height: 75px;
-  overflow: hidden;
-  clip-path: ellipse(48% 49% at 50% 50%);
+  width: 51px;
+  height: 56px;
   filter: drop-shadow(0 2px 3px rgba(0,0,0,.28));
-  touch-action: none;
-  cursor: grab;
-  transition: filter .16s ease;
+  pointer-events: none;
+  transition: left 200ms cubic-bezier(.22,.8,.28,1), top 200ms cubic-bezier(.22,.8,.28,1);
 }
 
-.placement-sticker--dragging {
-  cursor: grabbing;
-  filter: drop-shadow(0 7px 7px rgba(0,0,0,.3));
+.placement-sticker--hidden {
+  visibility: hidden;
 }
 
 .placement-sticker img {
   position: absolute;
-  left: -17px;
-  top: -30px;
-  width: 102px;
-  height: 119px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   max-width: none;
+  object-fit: contain;
   pointer-events: none;
   user-select: none;
 }
@@ -594,12 +437,13 @@ button {
 .placement-panel {
   position: absolute;
   z-index: 10;
+  top: 539px;
   left: 0;
   right: 0;
   bottom: 0;
   height: 313px;
   padding: 31px 32px 24px;
-  border-radius: 30px 30px 0 0;
+  border-radius: 0;
   background: #faf8f7;
   text-align: center;
 }
@@ -620,60 +464,190 @@ button {
   letter-spacing: -.4px;
 }
 
-.placement-panel button {
+.placement-actions {
   position: absolute;
   left: 32px;
+  right: 32px;
   top: 168px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.placement-action {
   width: 329px;
   height: 48px;
-  border: 0;
   border-radius: 12px;
-  background: #765cd8;
-  color: white;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.placement-action--primary {
+  border: 0;
+  background: #765cd8;
+  color: white;
+}
+
+.placement-action--secondary {
+  border: 2px solid #7960d9;
+  background: transparent;
+  color: #7960d9;
 }
 
 .placement-status {
   --fill-0: #1c1c1e;
 }
 
-@keyframes map-camera {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(0, 36px, 0); }
+.drive-off-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  overflow: hidden;
+  background: #c5d4e8;
 }
 
+.drive-off-coast {
+  position: absolute;
+  left: -89px;
+  top: -360px;
+  width: 572px;
+  height: 1240px;
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drive-off-van-wrap {
+  position: absolute;
+  left: 2px;
+  top: 350px;
+  width: 398px;
+  height: 225px;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.drive-off-van-wrap--driving {
+  animation: drive-off-exit 2.6s cubic-bezier(.4, 0, .2, 1) forwards;
+}
+
+.drive-off-van {
+  position: absolute;
+  left: -6.61%;
+  top: -66.25%;
+  width: 114.36%;
+  height: 204.42%;
+  max-width: none;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drive-off-sticker {
+  position: absolute;
+  z-index: 1;
+  width: 22px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .27));
+  pointer-events: none;
+}
+
+.drive-off-sticker img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  user-select: none;
+}
+
+.drive-off-status {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sticker-drop-overlay {
+  position: absolute;
+  z-index: 100;
+  left: 86.5px;
+  top: 241px;
+  width: 220px;
+  height: 220px;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .24));
+}
+
+.sticker-drop-overlay img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.sticker-drop-overlay--lifting {
+  animation: sticker-drop-lift 400ms cubic-bezier(.22, .8, .28, 1) both;
+}
+
+.sticker-drop-overlay--crossfading {
+  transform: translate3d(0, -152px, 0) rotate(1.5deg) scale(1.06);
+}
+
+.sticker-drop-overlay--landing {
+  transform: translate3d(-39.5px, 72px, 0) rotate(0) scale(.232);
+  transition: transform 340ms cubic-bezier(.4, .05, .25, 1);
+}
+
+/* Only the van moves — map background stays fixed; path follows road centerline */
 @keyframes van-travel {
-  from { offset-distance: 0%; }
-  to { offset-distance: 100%; }
+  0% { transform: translate(50.6px, 506.88px) rotate(-166.24deg); }
+  7% { transform: translate(57.46px, 478.88px) rotate(-162.34deg); }
+  13% { transform: translate(65.1px, 454.88px) rotate(-157.38deg); }
+  20% { transform: translate(75.1px, 430.88px) rotate(-152.49deg); }
+  27% { transform: translate(87.6px, 406.88px) rotate(-147.85deg); }
+  33% { transform: translate(100.17px, 386.88px) rotate(-144.33deg); }
+  40% { transform: translate(114.53px, 366.88px) rotate(-139.64deg); }
+  47% { transform: translate(131.53px, 346.88px) rotate(-139.87deg); }
+  53% { transform: translate(148.39px, 326.88px) rotate(-139.4deg); }
+  60% { transform: translate(165.53px, 306.88px) rotate(-139.87deg); }
+  67% { transform: translate(182.39px, 286.88px) rotate(-151.87deg); }
+  73% { transform: translate(193.53px, 262.88px) rotate(-163.87deg); }
+  80% { transform: translate(198.46px, 239.6px) rotate(-151.87deg); }
+  87% { transform: translate(212.39px, 219.17px) rotate(-139.87deg); }
+  93% { transform: translate(236.1px, 191.88px) rotate(-151.7deg); }
+  100% { transform: translate(243.1px, 178.88px) rotate(-151.7deg); }
 }
 
-@media (max-width: 480px) {
-  .experience-shell {
-    align-items: flex-start;
-    background: #faf8f7;
-  }
+@keyframes sticker-drop-lift {
+  from { transform: translate3d(0, 0, 0) rotate(0) scale(1); }
+  to { transform: translate3d(0, -152px, 0) rotate(1.5deg) scale(1.06); }
+}
 
-  .device {
-    padding: 0;
-    width: 393px;
-    height: 852px;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    zoom: min(1, calc(100vw / 393px), calc(100dvh / 852px));
-  }
-
-  .device__screen {
-    border-radius: 0;
-  }
+@keyframes drive-off-exit {
+  0%, 12% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(120%, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mind-map--traveling .map-world,
   .mind-map--traveling .map-world__van {
     animation-duration: 1ms;
+  }
+
+  .drive-off-van-wrap--driving {
+    animation-duration: 1ms;
+  }
+
+  .sticker-drop-overlay--lifting,
+  .sticker-drop-overlay--landing {
+    animation-duration: 1ms;
+    transition-duration: 1ms;
   }
 
   *, *::before, *::after {

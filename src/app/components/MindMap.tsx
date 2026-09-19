@@ -1,15 +1,6 @@
 import { useEffect, useRef } from "react";
-import StatusBarsComponent from "@/imports/StatusBars";
-import topography from "@/assets/map/figma/topography.svg";
-import water from "@/assets/map/figma/water.svg";
-import mapVan from "@/assets/map/figma/van.png";
-import silverStar from "@/assets/map/figma/silver-star.svg";
-import goldStar from "@/assets/map/figma/gold-star.svg";
-import stickerStand from "@/assets/map/figma/sticker-stand.svg";
-import treeDark from "@/assets/map/figma/tree-dark.svg";
-import treeLight from "@/assets/map/figma/tree-light.svg";
-import hillsLight from "@/assets/map/figma/hills-light.svg";
-import hillDark from "@/assets/map/figma/hill-dark.svg";
+import mapBackground from "@/assets/map/figma/van-page.png";
+import journeyVan from "@/assets/map/figma/journey-van.png";
 
 type MindMapProps = {
   completed?: boolean;
@@ -18,39 +9,23 @@ type MindMapProps = {
   onArrived?: () => void;
 };
 
-function MysteryStop() {
-  return (
-    <div className="mystery-stop" aria-label="Mystery stop ahead">
-      <span className="mystery-stop__post mystery-stop__post--top" />
-      <div className="mystery-stop__sign">
-        <div className="mystery-stop__inset">?</div>
-      </div>
-      <span className="mystery-stop__post mystery-stop__post--bottom" />
-    </div>
-  );
-}
-
 export default function MindMap({
   completed = false,
   traveling = false,
   arrived = false,
   onArrived,
 }: MindMapProps) {
-  const arrivedRef = useRef(completed);
+  const signaledRef = useRef(false);
   const onArrivedRef = useRef(onArrived);
   onArrivedRef.current = onArrived;
 
   useEffect(() => {
-    if (!traveling || completed || arrivedRef.current) return;
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    arrivedRef.current = true;
-    const timer = window.setTimeout(() => onArrivedRef.current?.(), 120);
-    return () => window.clearTimeout(timer);
-  }, [completed, traveling]);
+    if (traveling) signaledRef.current = false;
+  }, [traveling]);
 
-  const handleTravelEnd = (event: React.AnimationEvent<HTMLImageElement>) => {
-    if (event.animationName !== "van-travel" || arrivedRef.current) return;
-    arrivedRef.current = true;
+  const signalArrived = () => {
+    if (signaledRef.current || completed || !traveling) return;
+    signaledRef.current = true;
     onArrivedRef.current?.();
   };
 
@@ -62,53 +37,30 @@ export default function MindMap({
         arrived ? "mind-map--arrived" : "",
         completed ? "mind-map--completed" : "",
       ].join(" ")}
-      aria-label={completed ? "Completed Healthy Mind Map destination" : "Healthy Mind Map journey"}
+      aria-label={
+        completed
+          ? "Completed Healthy Mind Map destination"
+          : "Healthy Mind Map journey"
+      }
     >
       <div className="map-world">
-        <div className="map-world__base" />
-        <img className="map-world__topography" src={topography} alt="" draggable={false} />
-        <img className="map-hill map-hill--light" src={hillsLight} alt="" draggable={false} />
-        <img className="map-hill map-hill--dark" src={hillDark} alt="" draggable={false} />
-        <svg className="map-road" viewBox="0 0 393 930" aria-hidden="true">
-          <path className="map-road__shoulder" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
-          <path className="map-road__surface" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
-          <path className="map-road__center" d="M333 -50C270 93 350 205 285 330C205 455 102 475 145 620C177 729 104 786 111 940" />
-        </svg>
-        <img className="map-water" src={water} alt="" draggable={false} />
-        <img className="map-tree map-tree--one" src={treeDark} alt="" draggable={false} />
-        <img className="map-tree map-tree--two" src={treeLight} alt="" draggable={false} />
-        <img className="map-tree map-tree--three" src={treeDark} alt="" draggable={false} />
-        <img className="map-tree map-tree--four" src={treeLight} alt="" draggable={false} />
-        <img className="map-tree map-tree--five" src={treeDark} alt="" draggable={false} />
-        <img className="map-landmark map-landmark--stand" src={stickerStand} alt="Sticker Stand" draggable={false} />
-        <img className="map-landmark map-landmark--gold" src={goldStar} alt="Gold Star" draggable={false} />
-        <img className="map-landmark map-landmark--silver" src={silverStar} alt="Silver Star" draggable={false} />
-        {!completed && <MysteryStop />}
+        <img
+          className="map-exact"
+          src={mapBackground}
+          alt=""
+          width={393}
+          height={852}
+          draggable={false}
+        />
         <img
           className="map-world__van"
-          src={mapVan}
-          alt="Your van driving to the Silver Star"
+          src={journeyVan}
+          alt="Your van"
+          width={118}
+          height={146}
           draggable={false}
-          onAnimationEnd={handleTravelEnd}
+          onAnimationEnd={signalArrived}
         />
-      </div>
-
-      <header className="map-header">
-        <div className="map-header__back" aria-hidden="true">
-          <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
-            <path d="M7 1L1 7L7 13" stroke="#063235" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <div className="map-header__copy">
-          <h1>Your Mind Map</h1>
-          <p>Now in Starter County</p>
-        </div>
-        <div className="map-header__miles">
-          <strong>823</strong><span>MI</span>
-        </div>
-      </header>
-      <div className="map-status">
-        <StatusBarsComponent />
       </div>
     </section>
   );
