@@ -34,21 +34,21 @@ export default function MindMap({
   arrived = false,
   onArrived,
 }: MindMapProps) {
-  const arrived = useRef(completed);
+  const arrivedRef = useRef(completed);
   const onArrivedRef = useRef(onArrived);
   onArrivedRef.current = onArrived;
 
   useEffect(() => {
-    if (!traveling || completed || arrived.current) return;
+    if (!traveling || completed || arrivedRef.current) return;
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    arrived.current = true;
+    arrivedRef.current = true;
     const timer = window.setTimeout(() => onArrivedRef.current?.(), 120);
     return () => window.clearTimeout(timer);
   }, [completed, traveling]);
 
   const handleTravelEnd = (event: React.AnimationEvent<HTMLImageElement>) => {
-    if (event.animationName !== "van-travel" || arrived.current) return;
-    arrived.current = true;
+    if (event.animationName !== "van-travel" || arrivedRef.current) return;
+    arrivedRef.current = true;
     onArrivedRef.current?.();
   };
 
