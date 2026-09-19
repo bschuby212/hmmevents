@@ -51,13 +51,15 @@ export default function App() {
 
   useEffect(() => {
     let active = true;
+    let startTimer = 0;
     preloadImages([mapArtwork, mapVan]).then(() => {
       if (!active) return;
       setPhase("map");
-      requestAnimationFrame(() => requestAnimationFrame(() => setTraveling(true)));
+      startTimer = window.setTimeout(() => setTraveling(true), 850);
     });
     return () => {
       active = false;
+      window.clearTimeout(startTimer);
     };
   }, []);
 
@@ -88,7 +90,7 @@ export default function App() {
             setTraveling(false);
             setPhase("arrival");
             setProgress((current) => ({ ...current, status: "arrived" }));
-            window.setTimeout(() => setPhase("event"), 520);
+            window.setTimeout(() => setPhase("event"), 900);
           }}
         />
       );

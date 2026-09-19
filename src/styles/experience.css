@@ -67,7 +67,7 @@ button {
 
 /* Healthy Mind Map */
 .mind-map {
-  --travel-duration: 4.8s;
+  --travel-duration: 5.4s;
   position: absolute;
   inset: 0;
   overflow: hidden;
