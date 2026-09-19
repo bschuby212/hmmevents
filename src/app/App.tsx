@@ -84,12 +84,20 @@ export default function App() {
 
   useEffect(() => {
     if (phase === "event") {
-      nextAssets.current = preloadImages([event.rewardSticker]);
+      nextAssets.current = preloadImages([
+        event.rewardSticker,
+        event.stickerArtwork,
+      ]);
     }
     if (phase === "reward") {
-      nextAssets.current = preloadImages([coast, placementVan, event.rewardSticker]);
+      nextAssets.current = preloadImages([
+        coast,
+        placementVan,
+        event.rewardSticker,
+        event.stickerArtwork,
+      ]);
     }
-  }, [event.rewardSticker, phase]);
+  }, [event.rewardSticker, event.stickerArtwork, phase]);
 
   const beginStickerDrop = async () => {
     await nextAssets.current;
