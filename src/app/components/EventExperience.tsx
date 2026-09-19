@@ -99,7 +99,7 @@ export default function EventExperience({
               <path d="M15 3.5C15 5.85 15 7.02 15.62 7.83C16.43 9 17.6 9 20.5 9" stroke="white" strokeWidth="1.5" />
             </svg>
           )}
-          <span className="text-[14px] leading-[20px] font-bold">{reward ? "Collect Sticker" : "Continue"}</span>
+          <span className="text-[14px] leading-[20px] font-bold">{reward ? "Collect Sasquatch" : "Continue"}</span>
           {!reward && (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 12H18.5M13 6S19 10.42 19 12S13 18 13 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -108,7 +108,7 @@ export default function EventExperience({
         </button>
       </div>
 
-      <div className={reward ? "absolute inset-x-0 top-0 z-[50] pointer-events-none" : "absolute inset-x-0 top-0 z-[50] pointer-events-none [&_p]:!text-[#1C1C1E] [&_.text-white]:!text-[#1C1C1E]"} style={reward ? undefined : { "--fill-0": "#1C1C1E" } as React.CSSProperties}>
+      <div className="absolute inset-x-0 top-0 z-[50] pointer-events-none event-status--light">
         <StatusBarsComponent />
       </div>
     </section>

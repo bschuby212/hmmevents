@@ -237,15 +237,15 @@ export default function StickerPlacement({
       </div>
 
       <div className="placement-panel">
-        <h1>Place Your Sticker</h1>
-        <p>Drag your van to adjust the view, then place your sticker.</p>
+        <h1>Place Your Sasquatch</h1>
+        <p>Drag your van to frame the sighting, then tap where Sasquatch belongs.</p>
         <div className="placement-actions">
           <button
             type="button"
             className="placement-action placement-action--primary"
             onClick={() => setDrivingOff(true)}
           >
-            Place Sticker
+            Place Sasquatch
           </button>
           <button
             type="button"
