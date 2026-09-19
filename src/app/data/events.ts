@@ -1,7 +1,7 @@
 import sasquatchEvent from "@/imports/CloseTheDay-1/e2bd23e39d33f773566dc5e77b34e6ba32aa8619.png";
 import sasquatchReward from "@/imports/CloseTheDay/7d9a740afbefdbbf75c48b853fc1a0d85d8151ab.png";
 import sasquatchPackage from "@/imports/saswuatch_sticker.png";
-import sasquatchSticker from "@/assets/stickers/sasquatch.png";
+import sasquatchSticker from "@/assets/stickers/bigfoot.png";
 import dynsteryScene from "@/imports/CloseTheDay-3/bb30095c4684d0e28a22583fcb2b674724515ddb.png";
 import dynsteryPackage from "@/imports/dysntery.png";
 import dynsterySticker from "@/assets/stickers/nature-calls.png";
@@ -52,10 +52,10 @@ export const JOURNEY_EVENTS: JourneyEvent[] = [
       "Something moves between the trees. Slow down and take a closer look…",
     rewardCopy: "You saw it too, right? You earned the Sasquatch sticker.",
     collectLabel: "Collect Sasquatch",
-    placementTitle: "Place Your Sasquatch",
+    placementTitle: "Place Sticker",
     placementCopy:
-      "Drag your van to frame the woods, then tap where the sighting sticks.",
-    placeLabel: "Place Sasquatch",
+      "You survived the encounter. Drag your van to adjust the view, then tap where this sticker belongs.",
+    placeLabel: "Place Sticker",
     eventArtwork: sasquatchEvent,
     rewardArtwork: sasquatchReward,
     rewardSticker: sasquatchPackage,
@@ -74,10 +74,10 @@ export const JOURNEY_EVENTS: JourneyEvent[] = [
     rewardCopy:
       "You survived the pit stop. Nature called — and you answered.",
     collectLabel: "Collect Nature Calls",
-    placementTitle: "Place Nature Calls",
+    placementTitle: "Place Sticker",
     placementCopy:
-      "Drag your van to frame the roadside stop, then tap where Nature Calls belongs.",
-    placeLabel: "Place Nature Calls",
+      "You survived the encounter. Drag your van to adjust the view, then tap where this sticker belongs.",
+    placeLabel: "Place Sticker",
     eventArtwork: dynsteryScene,
     rewardArtwork: dynsteryScene,
     rewardSticker: dynsteryPackage,
@@ -96,10 +96,10 @@ export const JOURNEY_EVENTS: JourneyEvent[] = [
     rewardCopy:
       "You stopped to help. That kindness earned you the Helping Hand sticker.",
     collectLabel: "Collect Helping Hand",
-    placementTitle: "Place Helping Hand",
+    placementTitle: "Place Sticker",
     placementCopy:
-      "Drag your van to frame the roadside stop, then tap where this helping hand belongs.",
-    placeLabel: "Place Helping Hand",
+      "You survived the encounter. Drag your van to adjust the view, then tap where this sticker belongs.",
+    placeLabel: "Place Sticker",
     eventArtwork: strandedScene,
     rewardArtwork: strandedScene,
     rewardSticker: strandedPackage,

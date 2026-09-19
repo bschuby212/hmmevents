@@ -13,11 +13,18 @@ button {
 .experience-shell {
   width: 100%;
   height: 100%;
-  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   place-items: center;
   overflow: hidden;
   background: #ecebe8;
+}
+
+.experience-stage-frame {
+  position: relative;
+  flex: none;
+  overflow: visible;
 }
 
 .experience-stage {
@@ -29,7 +36,7 @@ button {
   flex: none;
   width: max-content;
   transform: scale(var(--stage-scale));
-  transform-origin: center center;
+  transform-origin: top left;
   will-change: transform;
 }
 

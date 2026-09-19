@@ -61,6 +61,7 @@ export default function App() {
   const transitionTimers = useRef<number[]>([]);
   const travelStartTimer = useRef(0);
   const shellRef = useRef<HTMLElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
 
   const clearTransitionTimers = () => {
@@ -94,29 +95,46 @@ export default function App() {
 
   useEffect(() => {
     const shell = shellRef.current;
+    const frame = frameRef.current;
     const stage = stageRef.current;
-    if (!shell || !stage) return;
+    if (!shell || !frame || !stage) return;
 
     const fitStage = () => {
       const pad = 16;
-      const availableWidth = Math.max(shell.clientWidth - pad, 1);
-      const availableHeight = Math.max(shell.clientHeight - pad, 1);
-      const naturalWidth = stage.offsetWidth || 1;
-      const naturalHeight = stage.offsetHeight || 1;
-      const scale = Math.min(
+      const viewportW =
+        window.visualViewport?.width ?? window.innerWidth ?? 0;
+      const viewportH =
+        window.visualViewport?.height ?? window.innerHeight ?? 0;
+      // Percentage heights can collapse in iframes; fall back to the viewport.
+      const shellW = shell.clientWidth > 32 ? shell.clientWidth : viewportW;
+      const shellH = shell.clientHeight > 32 ? shell.clientHeight : viewportH;
+      const availableWidth = Math.max((shellW || viewportW || 393) - pad, 1);
+      const availableHeight = Math.max((shellH || viewportH || 852) - pad, 1);
+      const naturalWidth = stage.offsetWidth || 421;
+      const naturalHeight = stage.offsetHeight || 938;
+      const rawScale = Math.min(
         availableWidth / naturalWidth,
         availableHeight / naturalHeight,
       );
+      // Never shrink the mock into an invisible speck (white screen).
+      const scale =
+        Number.isFinite(rawScale) && rawScale > 0
+          ? Math.max(rawScale, 0.2)
+          : 1;
       stage.style.setProperty("--stage-scale", String(scale));
+      frame.style.width = `${naturalWidth * scale}px`;
+      frame.style.height = `${naturalHeight * scale}px`;
     };
 
     fitStage();
     const observer = new ResizeObserver(fitStage);
     observer.observe(shell);
     observer.observe(stage);
+    window.addEventListener("resize", fitStage);
     window.addEventListener("orientationchange", fitStage);
     return () => {
       observer.disconnect();
+      window.removeEventListener("resize", fitStage);
       window.removeEventListener("orientationchange", fitStage);
     };
   }, []);
@@ -241,41 +259,43 @@ export default function App() {
 
   return (
     <main ref={shellRef} className="experience-shell" data-progress={progress.status}>
-      <div ref={stageRef} className="experience-stage">
-        <div className="experience-controls" aria-label="Event variants">
-          <div className="event-chips">
-            {JOURNEY_EVENTS.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className={`event-chip${activeEventId === item.id ? " event-chip--active" : ""}`}
-                onClick={() => selectEvent(item.id)}
-              >
-                {item.chipLabel}
-              </button>
-            ))}
+      <div ref={frameRef} className="experience-stage-frame">
+        <div ref={stageRef} className="experience-stage">
+          <div className="experience-controls" aria-label="Event variants">
+            <div className="event-chips">
+              {JOURNEY_EVENTS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`event-chip${activeEventId === item.id ? " event-chip--active" : ""}`}
+                  onClick={() => selectEvent(item.id)}
+                >
+                  {item.chipLabel}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="scene-reset"
+              aria-label="Reset scene"
+              onClick={restartMap}
+            >
+              <RotateCcw size={18} />
+            </button>
           </div>
-          <button
-            type="button"
-            className="scene-reset"
-            aria-label="Reset scene"
-            onClick={restartMap}
-          >
-            <RotateCcw size={18} />
-          </button>
-        </div>
 
-        <div className="device">
-          <div className="device__screen">
-            {screen}
-            {stickerTransition !== "idle" && stickerTransition !== "complete" && (
-              <div
-                className={`sticker-drop-overlay sticker-drop-overlay--${stickerTransition}`}
-                aria-hidden="true"
-              >
-                <img src={event.stickerArtwork} alt="" draggable={false} />
-              </div>
-            )}
+          <div className="device">
+            <div className="device__screen">
+              {screen}
+              {stickerTransition !== "idle" && stickerTransition !== "complete" && (
+                <div
+                  className={`sticker-drop-overlay sticker-drop-overlay--${stickerTransition}`}
+                  aria-hidden="true"
+                >
+                  <img src={event.stickerArtwork} alt="" draggable={false} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
