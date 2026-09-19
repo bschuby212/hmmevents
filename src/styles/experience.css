@@ -122,7 +122,7 @@ button {
   background: #c5d4a8;
 }
 
-/* Healthy Mind Map */
+/* Healthy Mind Map — exact Figma frame 2205:11235 */
 .mind-map {
   --travel-duration: 4.5s;
   position: absolute;
@@ -136,7 +136,7 @@ button {
   position: absolute;
   inset: 0;
   width: 393px;
-  height: 930px;
+  height: 852px;
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
@@ -150,307 +150,18 @@ button {
   transform: translate3d(0, 36px, 0);
 }
 
-.map-world__base {
+.map-exact {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: 0;
   width: 393px;
-  height: 930px;
-  background: #9fd2aa;
-}
-
-.map-world__topography {
-  position: absolute;
-  left: -208px;
-  top: -28px;
-  width: 957px;
-  height: 930px;
+  height: 852px;
   max-width: none;
-  opacity: .34;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  user-select: none;
-}
-
-.map-hill {
-  position: absolute;
-  max-width: none;
-  pointer-events: none;
-}
-
-.map-hill--light {
-  left: 16px;
-  top: 120px;
-  width: 236px;
-  height: 77px;
-}
-
-.map-hill--dark {
-  left: -74px;
-  top: 202px;
-  width: 174px;
-  height: 59.5px;
-}
-
-.map-road {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  width: 393px;
-  height: 930px;
-  overflow: visible;
-}
-
-.map-road path {
-  fill: none;
-}
-
-.map-road__shoulder {
-  stroke: #b8e0b9;
-  stroke-width: 112;
-}
-
-.map-road__surface {
-  stroke: #063b3e;
-  stroke-width: 68;
-}
-
-.map-road__center {
-  stroke: #e3a318;
-  stroke-width: 3;
-  stroke-dasharray: 8 11;
-}
-
-.map-water {
-  position: absolute;
-  left: 233px;
-  top: 452px;
-  width: 407px;
-  height: 506px;
-  max-width: none;
-  pointer-events: none;
-}
-
-.map-tree {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.map-tree--one { left: 340px; top: 132px; width: 39px; height: 46px; }
-.map-tree--two { left: 33px; top: 385px; width: 39px; height: 47px; }
-.map-tree--three { left: 157px; top: 598px; width: 39px; height: 46px; }
-.map-tree--four { left: 279px; top: 407px; width: 39px; height: 47px; }
-.map-tree--five { left: 18px; top: 749px; width: 39px; height: 46px; }
-
-.map-landmark {
-  position: absolute;
-  max-width: none;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Figma 2205:11454 — flipped horizontally (relativeTransform scaleX -1) */
-.map-landmark--stand {
-  left: 335px;
-  top: 632px;
-  width: 174px;
-  height: 174px;
-  transform: scaleX(-1);
-  transform-origin: top left;
-}
-
-.map-landmark--stand img {
-  position: absolute;
-  inset: 0;
-  width: 174px;
-  height: 174px;
-  max-width: none;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Figma 2205:14923 — Bebas Neue on the blank roof sign */
-.map-landmark__stand-title {
-  position: absolute;
-  z-index: 3;
-  left: 202.0859375px;
-  top: 656.3046875px;
-  width: 61.862683057785034px;
-  height: 19.124179363250732px;
   display: block;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  box-shadow: none;
-  color: #000;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 12.82157039642334px;
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 0.2564px;
-  line-height: normal;
-  text-align: left;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transform: matrix(0.997785210609436, -0.06651902198791504, 0, 1, 0, 0);
-  transform-origin: top left;
   pointer-events: none;
   user-select: none;
 }
 
-.map-landmark--gold {
-  left: 77px;
-  top: 704px;
-  width: 81px;
-  height: 83px;
-}
-
-.map-landmark--silver {
-  left: 225px;
-  top: 263px;
-  width: 109px;
-  height: 99px;
-}
-
-.map-world__van {
-  position: absolute;
-  z-index: 4;
-  left: 0;
-  top: 0;
-  width: 145px;
-  height: 149px;
-  transform: translate3d(43.5px, 615.5px, 0) rotate(-167.7deg);
-  transform-origin: center;
-  will-change: transform;
-  pointer-events: none;
-}
-
-.mind-map--traveling .map-world__van {
-  animation: van-travel var(--travel-duration) linear both;
-}
-
-.mind-map--arrived .map-world__van,
-.mind-map--completed .map-world__van {
-  transform: translate3d(205.5px, 226.5px, 0) rotate(-164.9deg);
-}
-
-.mystery-stop {
-  position: absolute;
-  z-index: 3;
-  left: 67px;
-  top: 140px;
-  width: 187px;
-  height: 198px;
-  pointer-events: none;
-}
-
-.mystery-stop__sign {
-  position: absolute;
-  left: 36px;
-  top: 31px;
-  width: 100px;
-  height: 119px;
-  padding: 6px 7px;
-  border-radius: 12.72px;
-  background: #468a56;
-}
-
-.mystery-stop__inset {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  border: 2px solid white;
-  border-radius: 8px;
-  color: white;
-  font-family: Inter, sans-serif;
-  font-size: 76px;
-  font-weight: 800;
-  line-height: 1;
-  padding-bottom: 7px;
-}
-
-.mystery-stop__post {
-  position: absolute;
-  left: 84px;
-  width: 4px;
-  background: repeating-linear-gradient(0deg, #d6d6cd 0 4px, #b9b9b2 4px 6px);
-}
-
-.mystery-stop__post--top {
-  top: 18px;
-  height: 14px;
-}
-
-.mystery-stop__post--bottom {
-  top: 150px;
-  height: 30px;
-}
-
-.map-header {
-  position: absolute;
-  z-index: 10;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 119px;
-  display: flex;
-  align-items: flex-start;
-  padding: 63px 18px 0;
-  background: rgba(249,247,246,.82);
-  backdrop-filter: blur(16px);
-}
-
-.map-header__back {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: #f1f1f1;
-  padding: 0;
-}
-
-.map-header__copy {
-  flex: 1;
-  padding-top: 2px;
-  text-align: center;
-}
-
-.map-header__copy h1 {
-  margin: 0;
-  color: #063235;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.5px;
-}
-
-.map-header__copy p {
-  margin: 5px 0 0;
-  color: #737272;
-  font-size: 12px;
-  line-height: 1.2;
-}
-
-.map-header__miles {
-  width: 47px;
-  padding-top: 10px;
-  white-space: nowrap;
-  color: #063235;
-}
-
-.map-header__miles strong {
-  font-size: 16px;
-}
-
-.map-header__miles span {
-  margin-left: 2px;
-  font-size: 10px;
-  font-weight: 700;
-  opacity: .5;
-}
 
 .map-status,
 .event-status,
@@ -884,27 +595,27 @@ button {
 }
 
 @keyframes van-travel {
-  0% { transform: translate3d(43.5px, 615.5px, 0) rotate(-167.7deg); }
-  5% { transform: translate3d(47.2px, 594.4px, 0) rotate(-171.9deg); }
-  10% { transform: translate3d(49.8px, 573px, 0) rotate(-174deg); }
-  15% { transform: translate3d(51.9px, 551.9px, 0) rotate(-174.1deg); }
-  20% { transform: translate3d(54.5px, 530.3px, 0) rotate(-172.2deg); }
-  25% { transform: translate3d(57.9px, 509.5px, 0) rotate(-168.5deg); }
-  30% { transform: translate3d(63.1px, 488.7px, 0) rotate(-163.2deg); }
-  35% { transform: translate3d(70.5px, 468.6px, 0) rotate(-156.4deg); }
-  40% { transform: translate3d(80.4px, 449.5px, 0) rotate(-148.9deg); }
-  45% { transform: translate3d(91.5px, 430.9px, 0) rotate(-148.4deg); }
-  50% { transform: translate3d(102.9px, 413.2px, 0) rotate(-145.9deg); }
-  55% { transform: translate3d(115.2px, 395.6px, 0) rotate(-144.5deg); }
-  60% { transform: translate3d(127.8px, 378.1px, 0) rotate(-144.2deg); }
-  65% { transform: translate3d(140.2px, 360.7px, 0) rotate(-145deg); }
-  70% { transform: translate3d(152.2px, 343px, 0) rotate(-146.7deg); }
-  75% { transform: translate3d(163.7px, 324.8px, 0) rotate(-149.1deg); }
-  80% { transform: translate3d(174.2px, 306.1px, 0) rotate(-152.1deg); }
-  85% { transform: translate3d(183.7px, 287.1px, 0) rotate(-155.3deg); }
-  90% { transform: translate3d(192.2px, 267px, 0) rotate(-158.6deg); }
-  95% { transform: translate3d(199.4px, 246.9px, 0) rotate(-161.9deg); }
-  100% { transform: translate3d(205.5px, 226.5px, 0) rotate(-164.9deg); }
+  0% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 158.29881286621094, 557.7612915039062); }
+  5% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 161.38387222290038, 542.3732269287109); }
+  10% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 164.46893157958985, 526.9851623535156); }
+  15% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 167.5539909362793, 511.5970977783203); }
+  20% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 170.63905029296876, 496.209033203125); }
+  25% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 173.7241096496582, 480.8209686279297); }
+  30% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 176.80916900634764, 465.4329040527344); }
+  35% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 179.89422836303712, 450.0448394775391); }
+  40% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 182.97928771972656, 434.6567749023437); }
+  45% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 186.06434707641603, 419.2687103271484); }
+  50% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 189.14940643310547, 403.8806457519531); }
+  55% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 192.2344657897949, 388.49258117675777); }
+  60% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 195.31952514648438, 373.1045166015625); }
+  65% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 198.40458450317382, 357.71645202636716); }
+  70% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 201.4896438598633, 342.3283874511719); }
+  75% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 204.57470321655273, 326.94032287597656); }
+  80% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 207.65976257324218, 311.5522583007812); }
+  85% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 210.74482192993165, 296.16419372558596); }
+  90% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 213.8298812866211, 280.7761291503906); }
+  95% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 216.91494064331056, 265.3880645751953); }
+  100% { transform: matrix(-0.7880107164382935, -0.6156614422798157, 0.6156614422798157, -0.7880107164382935, 220.0, 250.0); }
 }
 
 @keyframes sticker-drop-lift {
