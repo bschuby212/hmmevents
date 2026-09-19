@@ -84,6 +84,7 @@ export default function App() {
       return (
         <MindMap
           traveling={traveling}
+          arrived={phase === "arrival"}
           onArrived={() => {
             setTraveling(false);
             setPhase("arrival");

@@ -71,6 +71,7 @@ button {
   animation: map-camera var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
 }
 
+.mind-map--arrived .map-world,
 .mind-map--completed .map-world {
   transform: translate3d(0, 36px, 0);
 }
@@ -217,6 +218,7 @@ button {
   animation: van-travel var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
 }
 
+.mind-map--arrived .map-world__van,
 .mind-map--completed .map-world__van {
   offset-distance: 100%;
 }

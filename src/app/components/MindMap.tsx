@@ -12,6 +12,7 @@ import treeLight from "@/assets/map/figma/tree-light.svg";
 type MindMapProps = {
   completed?: boolean;
   traveling?: boolean;
+  arrived?: boolean;
   onArrived?: () => void;
 };
 
@@ -30,6 +31,7 @@ function MysteryStop() {
 export default function MindMap({
   completed = false,
   traveling = false,
+  arrived = false,
   onArrived,
 }: MindMapProps) {
   const arrived = useRef(completed);
@@ -55,6 +57,7 @@ export default function MindMap({
       className={[
         "mind-map",
         traveling ? "mind-map--traveling" : "",
+        arrived ? "mind-map--arrived" : "",
         completed ? "mind-map--completed" : "",
       ].join(" ")}
       aria-label={completed ? "Completed Healthy Mind Map destination" : "Healthy Mind Map journey"}
