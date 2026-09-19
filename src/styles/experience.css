@@ -201,13 +201,9 @@ button {
   top: 0;
   width: 145px;
   height: 149px;
-  offset-path: path("M 116 690 C 128 635 120 574 156 519 C 194 451 250 405 278 301");
-  offset-anchor: center;
-  offset-distance: 0%;
-  offset-rotate: auto 24deg;
-  transform: translateZ(0);
+  transform: translate3d(43.5px, 615.5px, 0) rotate(-54deg);
   transform-origin: center;
-  will-change: offset-distance;
+  will-change: transform;
   pointer-events: none;
 }
 
@@ -217,7 +213,7 @@ button {
 
 .mind-map--arrived .map-world__van,
 .mind-map--completed .map-world__van {
-  offset-distance: 100%;
+  transform: translate3d(205.5px, 226.5px, 0) rotate(-51deg);
 }
 
 .mystery-stop {
@@ -645,8 +641,13 @@ button {
 }
 
 @keyframes van-travel {
-  from { offset-distance: 0%; }
-  to { offset-distance: 100%; }
+  0% { transform: translate3d(43.5px, 615.5px, 0) rotate(-54deg); }
+  20% { transform: translate3d(46.5px, 580.5px, 0) rotate(-56deg); }
+  40% { transform: translate3d(54.5px, 529.5px, 0) rotate(-56deg); }
+  55% { transform: translate3d(83.5px, 444.5px, 0) rotate(-34deg); }
+  70% { transform: translate3d(132.5px, 375.5px, 0) rotate(-38deg); }
+  85% { transform: translate3d(177.5px, 317.5px, 0) rotate(-46deg); }
+  100% { transform: translate3d(205.5px, 226.5px, 0) rotate(-51deg); }
 }
 
 @media (max-width: 480px) {
