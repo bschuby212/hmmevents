@@ -21,23 +21,22 @@ button {
   background: #ecebe8;
 }
 
-.experience-stage-frame {
-  position: relative;
-  flex: none;
-  overflow: visible;
-}
-
 .experience-stage {
-  --stage-scale: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
   flex: none;
   width: max-content;
-  transform: scale(var(--stage-scale));
-  transform-origin: top left;
-  will-change: transform;
+  /* zoom affects layout (unlike transform), so the mock can't clip to blank */
+  zoom: max(0.35, min(1, calc(100vw / 460px), calc(100dvh / 980px)));
+}
+
+@supports not (zoom: 1) {
+  .experience-stage {
+    transform: scale(max(0.35, min(1, 100vw / 460, 100dvh / 980)));
+    transform-origin: center center;
+  }
 }
 
 .experience-controls {

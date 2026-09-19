@@ -63,9 +63,6 @@ export default function App() {
   const nextAssets = useRef<Promise<unknown>>(Promise.resolve());
   const transitionTimers = useRef<number[]>([]);
   const travelStartTimer = useRef(0);
-  const shellRef = useRef<HTMLElement | null>(null);
-  const frameRef = useRef<HTMLDivElement | null>(null);
-  const stageRef = useRef<HTMLDivElement | null>(null);
 
   const clearTransitionTimers = () => {
     transitionTimers.current.forEach((timer) => window.clearTimeout(timer));
@@ -89,84 +86,6 @@ export default function App() {
     return () => {
       window.clearTimeout(travelStartTimer.current);
       clearTransitionTimers();
-    };
-  }, []);
-
-  useEffect(() => {
-    const shell = shellRef.current;
-    const frame = frameRef.current;
-    const stage = stageRef.current;
-    if (!shell || !frame || !stage) return;
-
-    const clearInlineBox = (el: HTMLElement | null) => {
-      if (!el) return;
-      el.style.width = "";
-      el.style.height = "";
-      el.style.minWidth = "";
-      el.style.minHeight = "";
-    };
-
-    const fitStage = () => {
-      const pad = 16;
-      const viewportW = Math.max(
-        window.visualViewport?.width || 0,
-        window.innerWidth || 0,
-        1,
-      );
-      const viewportH = Math.max(
-        window.visualViewport?.height || 0,
-        window.innerHeight || 0,
-        1,
-      );
-
-      // Stale inline sizes from a collapsed first paint will block recovery when
-      // the embed grows — clear them once the viewport is usable.
-      if (viewportW >= 64 && viewportH >= 64) {
-        clearInlineBox(document.documentElement);
-        clearInlineBox(document.body);
-        clearInlineBox(document.getElementById("root"));
-        clearInlineBox(shell);
-      } else if (shell.clientHeight < 64 || shell.clientWidth < 64) {
-        shell.style.minWidth = `${viewportW}px`;
-        shell.style.width = `${viewportW}px`;
-        shell.style.minHeight = `${viewportH}px`;
-        shell.style.height = `${viewportH}px`;
-      }
-
-      const availableWidth = Math.max(
-        (shell.clientWidth || viewportW) - pad,
-        1,
-      );
-      const availableHeight = Math.max(
-        (shell.clientHeight || viewportH) - pad,
-        1,
-      );
-      const naturalWidth = stage.offsetWidth || 421;
-      const naturalHeight = stage.offsetHeight || 938;
-      const rawScale = Math.min(
-        availableWidth / naturalWidth,
-        availableHeight / naturalHeight,
-      );
-      // Never replace a tiny fit with scale=1 — that overflows overflow:hidden
-      // and paints a blank shell (white screen).
-      const scale =
-        Number.isFinite(rawScale) && rawScale > 0 ? rawScale : 1;
-      stage.style.setProperty("--stage-scale", String(scale));
-      frame.style.width = `${naturalWidth * scale}px`;
-      frame.style.height = `${naturalHeight * scale}px`;
-    };
-
-    fitStage();
-    const observer = new ResizeObserver(fitStage);
-    observer.observe(shell);
-    window.addEventListener("resize", fitStage);
-    window.visualViewport?.addEventListener("resize", fitStage);
-    window.addEventListener("orientationchange", fitStage);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", fitStage);
-      window.visualViewport?.removeEventListener("resize", fitStage);
-      window.removeEventListener("orientationchange", fitStage);
     };
   }, []);
 
@@ -286,44 +205,42 @@ export default function App() {
   }, [event, phase, stickerTransition, traveling]);
 
   return (
-    <main ref={shellRef} className="experience-shell" data-progress={progress.status}>
-      <div ref={frameRef} className="experience-stage-frame">
-        <div ref={stageRef} className="experience-stage">
-          <div className="experience-controls" aria-label="Event variants">
-            <div className="event-chips">
-              {JOURNEY_EVENTS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`event-chip${activeEventId === item.id ? " event-chip--active" : ""}`}
-                  onClick={() => selectEvent(item.id)}
-                >
-                  {item.chipLabel}
-                </button>
-              ))}
-            </div>
-            <button
-              type="button"
-              className="scene-reset"
-              aria-label="Reset scene"
-              onClick={restartMap}
-            >
-              <RotateCcw size={18} />
-            </button>
+    <main className="experience-shell" data-progress={progress.status}>
+      <div className="experience-stage">
+        <div className="experience-controls" aria-label="Event variants">
+          <div className="event-chips">
+            {JOURNEY_EVENTS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`event-chip${activeEventId === item.id ? " event-chip--active" : ""}`}
+                onClick={() => selectEvent(item.id)}
+              >
+                {item.chipLabel}
+              </button>
+            ))}
           </div>
+          <button
+            type="button"
+            className="scene-reset"
+            aria-label="Reset scene"
+            onClick={restartMap}
+          >
+            <RotateCcw size={18} />
+          </button>
+        </div>
 
-          <div className="device">
-            <div className="device__screen">
-              {screen}
-              {stickerTransition !== "idle" && stickerTransition !== "complete" && (
-                <div
-                  className={`sticker-drop-overlay sticker-drop-overlay--${stickerTransition}`}
-                  aria-hidden="true"
-                >
-                  <img src={event.stickerArtwork} alt="" draggable={false} />
-                </div>
-              )}
-            </div>
+        <div className="device">
+          <div className="device__screen">
+            {screen}
+            {stickerTransition !== "idle" && stickerTransition !== "complete" && (
+              <div
+                className={`sticker-drop-overlay sticker-drop-overlay--${stickerTransition}`}
+                aria-hidden="true"
+              >
+                <img src={event.stickerArtwork} alt="" draggable={false} />
+              </div>
+            )}
           </div>
         </div>
       </div>
