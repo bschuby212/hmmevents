@@ -34,11 +34,29 @@
       #root:not(:empty) + #boot {
         display: none;
       }
+      #boot .hint {
+        display: block;
+        margin-top: 10px;
+        max-width: 16rem;
+        font-size: 12px;
+        font-weight: 500;
+        color: #5b6d6e;
+        text-align: center;
+        line-height: 1.35;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
     <div id="boot" aria-hidden="true">Your Mind Map</div>
+    <script>
+      // If the module graph never arrives (dead port forward), don't spin forever.
+      setTimeout(function () {
+        var boot = document.getElementById("boot");
+        if (!boot || !document.getElementById("root") || document.getElementById("root").childElementCount) return;
+        boot.innerHTML = 'Your Mind Map<span class="hint">Still waiting on the app bundle. Open the public link from chat instead of localhost.</span>';
+      }, 8000);
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
