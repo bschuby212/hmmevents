@@ -164,6 +164,15 @@ export default function App() {
         <StickerPlacement
           event={event}
           stickerVisible={stickerTransition === "complete"}
+          onSaveForLater={() => {
+            setProgress({
+              status: "completed",
+              completed: true,
+              stickerEarned: true,
+              stickerPlaced: false,
+            });
+            setPhase("complete");
+          }}
           onConfirm={() => {
             setProgress({
               status: "completed",

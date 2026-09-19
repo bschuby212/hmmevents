@@ -15,6 +15,7 @@ export type StickerTransform = {
 type StickerPlacementProps = {
   event: JourneyEvent;
   onConfirm: (placement: StickerTransform) => void;
+  onSaveForLater: () => void;
   stickerVisible?: boolean;
 };
 
@@ -49,6 +50,7 @@ function clampVanOffset(offset: number) {
 export default function StickerPlacement({
   event,
   onConfirm,
+  onSaveForLater,
   stickerVisible = true,
 }: StickerPlacementProps) {
   const [placement, setPlacement] = useState<StickerTransform>(DEFAULT_PLACEMENT);
@@ -237,9 +239,22 @@ export default function StickerPlacement({
       <div className="placement-panel">
         <h1>Place Your Sticker</h1>
         <p>Drag your van to adjust the view, then place your sticker.</p>
-        <button type="button" onClick={() => setDrivingOff(true)}>
-          Place Sticker
-        </button>
+        <div className="placement-actions">
+          <button
+            type="button"
+            className="placement-action placement-action--primary"
+            onClick={() => setDrivingOff(true)}
+          >
+            Place Sticker
+          </button>
+          <button
+            type="button"
+            className="placement-action placement-action--secondary"
+            onClick={onSaveForLater}
+          >
+            Save For Later
+          </button>
+        </div>
       </div>
       <div className="placement-status">
         <StatusBarsComponent />
