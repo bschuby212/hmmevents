@@ -1,16 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import MindMap from "@/app/components/MindMap";
 import EventExperience from "@/app/components/EventExperience";
-import StickerPlacement, {
-  type StickerTransform,
-} from "@/app/components/StickerPlacement";
+import StickerPlacement from "@/app/components/StickerPlacement";
 import {
   BIGFOOT_EVENT,
   INITIAL_PROGRESS,
   type EventProgress,
 } from "@/app/data/events";
-import mapArtwork from "@/assets/map/map.png";
-import mapVan from "@/assets/map/map-van.png";
+import mapTopography from "@/assets/map/figma/topography.svg";
+import mapVan from "@/assets/map/figma/van.png";
+import mapWater from "@/assets/map/figma/water.svg";
 import coast from "@/assets/placement/coast.png";
 import placementVan from "@/assets/placement/van.png";
 
@@ -46,13 +45,12 @@ export default function App() {
   const [phase, setPhase] = useState<ExperiencePhase>("loading");
   const [traveling, setTraveling] = useState(false);
   const [progress, setProgress] = useState<EventProgress>(INITIAL_PROGRESS);
-  const [placement, setPlacement] = useState<StickerTransform | null>(null);
   const nextAssets = useRef<Promise<unknown>>(Promise.resolve());
 
   useEffect(() => {
     let active = true;
     let startTimer = 0;
-    preloadImages([mapArtwork, mapVan]).then(() => {
+    preloadImages([mapTopography, mapWater, mapVan]).then(() => {
       if (!active) return;
       setPhase("map");
       startTimer = window.setTimeout(() => setTraveling(true), 850);
@@ -123,8 +121,7 @@ export default function App() {
       return (
         <StickerPlacement
           event={event}
-          onConfirm={(confirmedPlacement) => {
-            setPlacement(confirmedPlacement);
+          onConfirm={() => {
             setProgress({
               status: "completed",
               completed: true,
@@ -144,11 +141,6 @@ export default function App() {
       <div className="device">
         <div className="device__screen">{screen}</div>
       </div>
-      {phase === "complete" && placement && (
-        <p className="completion-note" role="status">
-          Bigfoot sticker placed · Silver Star reached
-        </p>
-      )}
     </main>
   );
 }

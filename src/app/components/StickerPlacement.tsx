@@ -124,9 +124,9 @@ export default function StickerPlacement({
 
       <div className="placement-panel">
         <h1>Place Your Sticker</h1>
-        <p>Drag Bigfoot onto your van. Swipe the van to adjust your view.</p>
+        <p>Drag your van to adjust the view, then place your sticker.</p>
         <button type="button" onClick={() => onConfirm(placement)}>
-          Confirm Placement
+          Place Sticker
         </button>
       </div>
       <div className="placement-status">

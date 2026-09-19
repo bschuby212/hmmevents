@@ -1,0 +1,41 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="39.1221" height="47.1702" viewBox="0 0 39.1221 47.1702" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1000005597" filter="url(#filter0_g_0_4)">
+<g id="Union" filter="url(#filter1_n_0_4)">
+<path d="M19.9268 2C23.1896 2 26.1075 4.18706 28.0537 8.49512C30.0895 8.1269 31.9323 8.60835 33.3906 9.80859C35.6189 11.6425 36.3736 14.6792 35.0615 18.3398C36.3759 20.5671 37.1221 23.28 37.1221 26.4707C37.1219 36.5956 29.6182 37.8003 20.2295 37.8506C20.1289 37.8514 20.028 37.8535 19.9268 37.8535C19.8886 37.8535 19.8505 37.8527 19.8125 37.8525C19.7288 37.8527 19.6445 37.8535 19.5605 37.8535C9.86222 37.8535 2.00021 36.8347 2 26.4707C2 23.277 2.74673 20.5614 4.06348 18.333C2.75482 14.6754 3.51044 11.6414 5.7373 9.80859C7.35141 8.48027 9.43616 8.03226 11.7324 8.64258C13.6783 4.23659 16.6268 2.00003 19.9268 2Z" fill="#CBE6B1"/>
+</g>
+<g id="Group 1000005577">
+<path id="Vector 256" d="M19.5625 45.1702L19.5625 12.2433" stroke="#063235" stroke-width="1.46341"/>
+<path id="Vector 259" d="M19.5625 25.0482L23.5869 19.5604" stroke="#063235" stroke-width="1.46341"/>
+<path id="Vector 261" d="M19.5625 19.5604L15.904 14.4385" stroke="#063235" stroke-width="1.46341"/>
+<path id="Vector 260" d="M19.5625 35.658L25.0503 27.6092" stroke="#063235" stroke-width="1.46341"/>
+<path id="Vector 262" d="M19.9284 33.097L14.4406 25.0482" stroke="#063235" stroke-width="1.46341"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_g_0_4" x="0" y="0" width="39.1221" height="47.1702" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.99900001287460327 0.99900001287460327" numOctaves="3" seed="6203" />
+<feDisplacementMap in="shape" scale="4" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect1_texture_0_4">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+<filter id="filter1_n_0_4" x="2" y="2" width="35.1221" height="35.8535" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="2.7333333492279053 2.7333333492279053" stitchTiles="stitch" numOctaves="3" result="noise" seed="1261" />
+<feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise" />
+<feComponentTransfer in="alphaNoise" result="coloredNoise1">
+<feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "/>
+</feComponentTransfer>
+<feComposite operator="in" in2="shape" in="coloredNoise1" result="noise1Clipped" />
+<feFlood flood-color="#B07D23" result="color1Flood" />
+<feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1" />
+<feMerge result="effect1_noise_0_4">
+<feMergeNode in="shape" />
+<feMergeNode in="color1" />
+</feMerge>
+</filter>
+</defs>
+</svg>

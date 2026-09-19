@@ -48,41 +48,22 @@ button {
   background: #c5d4a8;
 }
 
-.completion-note {
-  position: fixed;
-  left: 50%;
-  bottom: 14px;
-  z-index: 80;
-  margin: 0;
-  transform: translateX(-50%);
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(6, 50, 53, 0.86);
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  animation: completion-note-in .35s ease-out both;
-}
-
 /* Healthy Mind Map */
 .mind-map {
   --travel-duration: 5.4s;
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #b9d8a6;
+  background: #9fd2aa;
   color: #063235;
 }
 
 .map-world {
   position: absolute;
-  left: 0;
-  top: -54px;
+  inset: 0;
   width: 393px;
-  height: 906px;
+  height: 930px;
   transform: translate3d(0, 0, 0);
-  transform-origin: center;
   will-change: transform;
 }
 
@@ -91,17 +72,128 @@ button {
 }
 
 .mind-map--completed .map-world {
-  transform: translate3d(0, 220px, 0);
+  transform: translate3d(0, 36px, 0);
 }
 
-.map-world__art {
+.map-world__base {
   position: absolute;
   inset: 0;
   width: 393px;
-  height: 906px;
+  height: 930px;
+  background: #9fd2aa;
+}
+
+.map-world__topography {
+  position: absolute;
+  left: -208px;
+  top: -28px;
+  width: 957px;
+  height: 930px;
+  max-width: none;
+  opacity: .34;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
+}
+
+.map-hill {
+  position: absolute;
+  border-radius: 50%;
+  background: #8dca9d;
+  opacity: .9;
+}
+
+.map-hill--one {
+  left: -88px;
+  top: 112px;
+  width: 250px;
+  height: 165px;
+  transform: rotate(-14deg);
+}
+
+.map-hill--two {
+  left: -54px;
+  top: 188px;
+  width: 160px;
+  height: 142px;
+  background: #43885a;
+}
+
+.map-road {
+  position: absolute;
+  inset: 0;
+  width: 393px;
+  height: 930px;
+  overflow: visible;
+}
+
+.map-road path {
+  fill: none;
+}
+
+.map-road__shoulder {
+  stroke: #b8e0b9;
+  stroke-width: 112;
+}
+
+.map-road__surface {
+  stroke: #063b3e;
+  stroke-width: 68;
+}
+
+.map-road__center {
+  stroke: #e3a318;
+  stroke-width: 3;
+  stroke-dasharray: 8 11;
+}
+
+.map-water {
+  position: absolute;
+  left: 233px;
+  top: 452px;
+  width: 407px;
+  height: 506px;
+  max-width: none;
+  pointer-events: none;
+}
+
+.map-tree {
+  position: absolute;
+  pointer-events: none;
+}
+
+.map-tree--one { left: 340px; top: 132px; width: 39px; height: 46px; }
+.map-tree--two { left: 33px; top: 385px; width: 39px; height: 47px; }
+.map-tree--three { left: 157px; top: 598px; width: 39px; height: 46px; }
+.map-tree--four { left: 279px; top: 407px; width: 39px; height: 47px; }
+.map-tree--five { left: 18px; top: 749px; width: 39px; height: 46px; }
+
+.map-landmark {
+  position: absolute;
   max-width: none;
   pointer-events: none;
   user-select: none;
+}
+
+.map-landmark--stand {
+  left: 178px;
+  top: 622px;
+  width: 174px;
+  height: 174px;
+}
+
+.map-landmark--gold {
+  left: 77px;
+  top: 704px;
+  width: 81px;
+  height: 83px;
+}
+
+.map-landmark--silver {
+  left: 225px;
+  top: 252px;
+  width: 109px;
+  height: 99px;
 }
 
 .map-world__van {
@@ -109,12 +201,12 @@ button {
   z-index: 4;
   left: 0;
   top: 0;
-  width: 106px;
-  height: 108px;
-  margin: -54px 0 0 -53px;
-  offset-path: path("M 302 695 C 302 630 282 577 240 516 C 200 460 150 403 123 366 C 118 356 118 346 119 340");
+  width: 183px;
+  height: 188px;
+  margin: -94px 0 0 -91.5px;
+  offset-path: path("M 116 742 C 128 660 118 588 156 519 C 194 451 250 405 278 301");
   offset-distance: 0%;
-  offset-rotate: auto 135deg;
+  offset-rotate: auto 24deg;
   transform: translateZ(0);
   transform-origin: center;
   will-change: offset-distance;
@@ -132,22 +224,21 @@ button {
 .mystery-stop {
   position: absolute;
   z-index: 3;
-  left: 36px;
-  top: 166px;
-  width: 166px;
-  height: 184px;
+  left: 67px;
+  top: 140px;
+  width: 187px;
+  height: 198px;
   pointer-events: none;
-  filter: drop-shadow(0 5px 5px rgba(31, 63, 42, .22));
 }
 
 .mystery-stop__sign {
   position: absolute;
-  left: 34px;
-  top: 28px;
+  left: 36px;
+  top: 31px;
   width: 100px;
   height: 119px;
-  padding: 6px;
-  border-radius: 13px;
+  padding: 6px 7px;
+  border-radius: 12.72px;
   background: #468a56;
 }
 
@@ -163,46 +254,24 @@ button {
   font-size: 76px;
   font-weight: 800;
   line-height: 1;
-  padding-bottom: 8px;
+  padding-bottom: 7px;
 }
 
 .mystery-stop__post {
   position: absolute;
-  left: 82px;
-  width: 5px;
-  border: 1px solid rgba(84, 83, 71, .45);
+  left: 84px;
+  width: 4px;
   background: repeating-linear-gradient(0deg, #d6d6cd 0 4px, #b9b9b2 4px 6px);
 }
 
 .mystery-stop__post--top {
-  top: 17px;
+  top: 18px;
   height: 14px;
 }
 
 .mystery-stop__post--bottom {
-  top: 146px;
-  height: 34px;
-}
-
-.destination-complete {
-  position: absolute;
-  z-index: 4;
-  left: 83px;
-  top: 300px;
-  width: 74px;
-  height: 74px;
-  display: grid;
-  place-items: center;
-  border: 7px solid rgba(255,255,255,.82);
-  border-radius: 50%;
-  background: #468a56;
-  box-shadow: 0 7px 12px rgba(27, 59, 36, .24);
-}
-
-.destination-complete span {
-  color: white;
-  font-size: 34px;
-  font-weight: 800;
+  top: 150px;
+  height: 30px;
 }
 
 .map-header {
@@ -226,9 +295,7 @@ button {
   place-items: center;
   border-radius: 12px;
   background: #f1f1f1;
-  font-size: 30px;
-  line-height: 1;
-  padding: 0 0 4px 0;
+  padding: 0;
 }
 
 .map-header__copy {
@@ -290,34 +357,6 @@ button {
 .map-status p,
 .placement-status p {
   color: #1c1c1e !important;
-}
-
-.map-progress {
-  position: absolute;
-  z-index: 12;
-  left: 134px;
-  top: 109px;
-  width: 125px;
-  height: 3px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(6,50,53,.12);
-}
-
-.map-progress__fill {
-  display: block;
-  width: 8%;
-  height: 100%;
-  border-radius: inherit;
-  background: #765cd8;
-}
-
-.mind-map--traveling .map-progress__fill {
-  animation: progress-drive var(--travel-duration) cubic-bezier(.45, 0, .22, 1) both;
-}
-
-.map-progress__fill--complete {
-  width: 100%;
 }
 
 /* Bigfoot event and reward */
@@ -530,17 +569,16 @@ button {
   width: 68px;
   height: 75px;
   overflow: hidden;
-  clip-path: polygon(18% 2%, 82% 1%, 97% 17%, 96% 78%, 78% 98%, 20% 96%, 3% 78%, 2% 18%);
+  clip-path: ellipse(48% 49% at 50% 50%);
   filter: drop-shadow(0 2px 3px rgba(0,0,0,.28));
   touch-action: none;
   cursor: grab;
-  transition: filter .16s ease, scale .16s ease;
+  transition: filter .16s ease;
 }
 
 .placement-sticker--dragging {
   cursor: grabbing;
   filter: drop-shadow(0 7px 7px rgba(0,0,0,.3));
-  scale: 1.06;
 }
 
 .placement-sticker img {
@@ -604,22 +642,12 @@ button {
 
 @keyframes map-camera {
   from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(0, 220px, 0); }
+  to { transform: translate3d(0, 36px, 0); }
 }
 
 @keyframes van-travel {
   from { offset-distance: 0%; }
   to { offset-distance: 100%; }
-}
-
-@keyframes progress-drive {
-  from { width: 8%; }
-  to { width: 100%; }
-}
-
-@keyframes completion-note-in {
-  from { opacity: 0; transform: translate(-50%, 8px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 @media (max-width: 480px) {
@@ -645,8 +673,7 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   .mind-map--traveling .map-world,
-  .mind-map--traveling .map-world__van,
-  .mind-map--traveling .map-progress__fill {
+  .mind-map--traveling .map-world__van {
     animation-duration: 1ms;
   }
 
