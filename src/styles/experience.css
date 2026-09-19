@@ -268,17 +268,20 @@ button {
 .map-landmark__stand-title {
   position: absolute;
   z-index: 3;
-  left: 202px;
-  top: 656px;
-  width: 62px;
-  height: 19px;
+  left: 200px;
+  top: 654px;
+  width: 66px;
+  height: 15px;
   display: grid;
   place-items: center;
+  border-radius: 1px;
+  background: #f4eee4;
+  box-shadow: inset 0 0 0 1px rgba(58, 30, 19, 0.18);
   color: #1a1512;
   font-family: Inter, system-ui, sans-serif;
-  font-size: 7px;
+  font-size: 6.5px;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
